@@ -18,10 +18,8 @@ const params = {
   }
 };
 const images = [
-  '/images/home-1.jpg',
-  '/images/home-2.jpg',
-  '/images/home-3.jpg',
-  '/images/home-4.jpg',
+  'https://secureservercdn.net/198.71.233.96/h18.748.myftpupload.com/wp-content/uploads/2020/05/DSC08086.jpg',
+  'https://secureservercdn.net/198.71.233.96/h18.748.myftpupload.com/wp-content/uploads/2020/05/DSC08005.jpg',
 ];
 
 export default class HeroSection extends Component {
@@ -37,15 +35,15 @@ export default class HeroSection extends Component {
                   backgroundImage: `url("${image}")`
                 }}
               >
-                <p className="font-size-display5 font-family-secondary mb-4 text-center hero-header">
+                {/* <p className="font-size-display5 font-family-secondary mb-4 text-center hero-header">
                   The care you've always needed
                 </p>
                 <p className="text-transform-uppercase font-size-title mb-5 hero-subheader">
                   A range of products for you
-                </p>
+                </p> */}
                 <Link href="/collection">
-                  <a className="d-flex align-items-center bg-transparent border border-color-white h-56 px-5 font-color-white hero-btn">
-                    Shop now
+                  <a className="d-flex align-items-center h-56 px-5 font-color-white hero-btn">
+                    Best Sellers
                   </a>
                 </Link>
               </div>

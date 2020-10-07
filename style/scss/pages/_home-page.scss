@@ -28,6 +28,12 @@ $color: rgba(0, 0, 0, 0);
 
   .hero-btn {
     text-shadow: 1px 1px 3px rgba(33, 33, 33, 0.5);
+    border: 2px solid black;
+  }
+
+  .hero-btn:hover {
+    background: black;
+    transition: ease-in-out 0.5s;
   }
 }
 

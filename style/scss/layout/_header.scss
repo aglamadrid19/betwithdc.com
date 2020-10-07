@@ -4,19 +4,19 @@ header {
 
 .header {
   padding: 1.5rem 3rem;
-  background-color: transparent;
+  background-color: white;
   border-bottom: 1px solid;
   border-color: transparent;
-  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out,
-    filter 0.01s linear 0.2s;
-  filter: invert(1);
+  // transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out,
+  //   filter 0.01s linear 0.2s;
+  // filter: invert(1);
 
-  &.invert {
-    background-color: #fff;
-    border-color: #000;
-    filter: none;
-    transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
-  }
+  // &.invert {
+  //   background-color: #fff;
+  //   border-color: #000;
+  //   filter: none;
+  //   transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+  // }
 
   @include small-xs {
     padding: 1.25rem 1.5rem 1.25rem 1rem;
@@ -34,6 +34,11 @@ header {
       position: static;
       transform: none;
     }
+  }
+
+  .logo-container a {
+    color: black !important;
+    font-size: 1.8rem;
   }
 
   .logo {
