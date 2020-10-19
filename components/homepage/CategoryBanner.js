@@ -18,7 +18,7 @@ class CategoryBanner extends Component {
             {categories.map((item, index) => (
               <div
               key={`category-item-${index}`}
-              className="col-12 col-md-6 collection-item mb-5"
+              className="col-6 col-md-3 collection-item mb-5"
             >
                 <Link href="{item.link}">
                 <a className="align-items-center font-color-black flex-column cursor-pointer mb-5">

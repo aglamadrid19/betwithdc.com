@@ -4,6 +4,10 @@ import Lottie from 'react-lottie';
 import animationData from '../../lotties/add-to-cart.json';
 
 export default function Animation( props ) {
+  const buttonStyle = {
+    color: 'white'
+  };
+
   const defaultOptions = {
     loop: false,
     autoplay: false,
@@ -12,9 +16,9 @@ export default function Animation( props ) {
       preserveAspectRatio: 'xMidYMid slice',
     },
   };
-
+  
   return (
-    <div className="cart-animation">
+    <div className={buttonStyle}>
       <Lottie
         options={defaultOptions}
         height={32}

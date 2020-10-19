@@ -98,7 +98,7 @@ class Cart extends Component {
                     className="bg-transparent p-0"
                     onClick={() => toggle(false)}
                   >
-                    <img src="/icon/cross.svg" />
+                    <img src="/icon/cross-black.svg" />
                   </button>
                 </div>
               </div>

@@ -124,20 +124,25 @@ class Header extends Component {
     const { transparent, cart } = this.props;
 
     return (
-      <header className="position-fixed top-0 left-0 right-0 font-weight-semibold no-print">
+      <header className="sticky-top top-0 left-0 right-0 font-weight-semibold no-print">
         <Cart isOpen={showCart} toggle={value => this.toggleCart(value)} />
         <div
           ref={this.header}
-          className={`d-flex header align-items-center justify-content-between position-relative ${
+          className={`d-flex header align-items-center justify-content-around position-relative ${
             transparent ? '' : 'invert'
           }`}
         >
           <div className="d-none d-sm-flex">
             <Link href="/collection">
-              <a href="/collection" className="mr-4 font-color-black">Shop</a>
+              <a style={{color: `white`}} href="/collection" className="mr-4">Packages</a>
+            </Link>
+            <Link href="http://jquense.github.io/react-big-calendar/examples/index.html#resource">
+              <a style={{color: `white`}} href="http://jquense.github.io/react-big-calendar/examples/index.html#resource" className="mr-4">
+                1x1 Consultation
+              </a>
             </Link>
             <Link href="/about">
-              <a href="/about" className="font-color-black">
+              <a style={{color: `white`}} href="/about" className="">
                 About
               </a>
             </Link>
@@ -146,13 +151,12 @@ class Header extends Component {
             <img
               src={`/icon/${showMobileMenu ? 'cross' : 'menu'}.svg`}
               onClick={this.toggleMobileMenu}
-              className="w-32 mr-1 d-block d-sm-none"
+              className="mr-1 d-block d-sm-none"
               alt="Menu icon"
+              style={{width: `3rem`}}
             />
             <Link href="/">
-              <a>
-                <strong>betwithdc.com</strong>
-              </a>
+              <img src="/images/logo.svg" width="75%"></img>
             </Link>
           </div>
           <div className="d-flex">
@@ -161,7 +165,7 @@ class Header extends Component {
               onClick={this.toggleCart}
             >
               <Animation isStopped={ this.state.playAddToCartAnimation } />
-              <div className="cart-count position-absolute font-size-tiny font-weight-bold">
+              <div className="text-white cart-count position-absolute font-size-tiny font-weight-bold">
                 {cart.total_items}
               </div>
             </div>

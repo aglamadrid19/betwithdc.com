@@ -1,55 +1,96 @@
-import React, { Component } from 'react';
-import Swiper, { EffectFade, Autoplay } from 'react-id-swiper';
+import React from 'react';
 import Link from 'next/link';
+import ReactPlayer from 'react-player'
 
-const params = {
-  modules: [EffectFade, Autoplay],
-  slidesPerView: 1,
-  watchOverflow: false,
-  autoplay: {
-    delay: 5000
-  },
-  loop: true,
-  allowTouchMove: false,
-  speed: 1000,
-  effect: 'fade',
-  fadeEffect: {
-    crossFade: true
+<ReactPlayer url='https://www.youtube.com/watch?v=ysz5S6PUM-U' />
+
+export default class HeroSection extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.exploreContainer = React.createRef();
+    this.image = React.createRef();
+
+    this.handleScroll = this.handleScroll.bind(this);
+    this.animate = this.animate.bind(this);
   }
-};
-const images = [
-  'https://secureservercdn.net/198.71.233.96/h18.748.myftpupload.com/wp-content/uploads/2020/05/DSC08086.jpg',
-  'https://secureservercdn.net/198.71.233.96/h18.748.myftpupload.com/wp-content/uploads/2020/05/DSC08005.jpg',
-];
 
-export default class HeroSection extends Component {
+  componentDidMount() {
+    window.addEventListener('scroll', this.handleScroll);
+    this.handleScroll();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
+  }
+
+  handleScroll() {
+    window.requestAnimationFrame(this.animate);
+  }
+
+  animate() {
+    if (!this.exploreContainer.current) {
+      return;
+    }
+    const dimensions = this.exploreContainer.current.getBoundingClientRect();
+    const x = window.matchMedia('(min-width: 768px)');
+
+    // if (x.matches) {
+    //   if (dimensions.top - window.innerHeight < 0 && dimensions.bottom > 0) {
+    //     const scrolledRatio =
+    //       (window.innerHeight - dimensions.top) / window.innerHeight - 1;
+
+    //     this.image.current.style.transform = `translateY(${-scrolledRatio *
+    //       100}px)`;
+    //   }
+    // }
+  }
+
   render() {
     return (
-      <div className="hero-section position-relative">
-        <Swiper {...params}>
-          {images.map((image, index) => (
-            <div key={image}>
-              <div
-                className="hero-slide d-flex align-items-center justify-content-center flex-column font-color-white py-5"
-                style={{
-                  backgroundImage: `url("${image}")`
-                }}
-              >
-                {/* <p className="font-size-display5 font-family-secondary mb-4 text-center hero-header">
-                  The care you've always needed
-                </p>
-                <p className="text-transform-uppercase font-size-title mb-5 hero-subheader">
-                  A range of products for you
-                </p> */}
-                <Link href="/collection">
-                  <a className="d-flex align-items-center h-56 px-5 font-color-white hero-btn">
-                    Best Sellers
-                  </a>
-                </Link>
+      
+      <div className="hero-section">
+        <div className="bg-brand300 position-relative py-md-5">
+          {/* Image Absolute */}
+          <div className="position-md-absolute left-0 bottom-0 right-0">
+            <div className="custom-container px-0">
+              <div className="row">
+                <div className="col-md-5 offset-md-7">
+                  <div className="position-relative">
+                    <div className="position-md-absolute right-0 left-0 bottom-0">
+                      <div
+                        ref={this.image}
+                        className="hero-section--image"
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-          ))}
-        </Swiper>
+          </div>
+
+          {/* Content */}
+          <div ref={this.exploreContainer} className="custom-container py-md-5">
+            <div className="row py-5">
+              <div className="col-12 col-md-6 py-5">
+                <p
+                  className="font-size-display3 font-weight-light mb-4"
+                  style={{ maxWidth: '20rem' }}
+                >
+                  Check our best sellers
+                </p>
+                <div className="d-flex">
+                  <Link href="/collection">
+                    <a className="d-flex py-3 align-items-center font-color-black borderbottom border-color-black">
+                      <p className="mr-3">Explore products</p>
+                      <img src="/icon/arrow-long-right.svg" />
+                    </a>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
