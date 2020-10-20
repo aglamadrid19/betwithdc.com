@@ -128,9 +128,7 @@ class Header extends Component {
         <Cart isOpen={showCart} toggle={value => this.toggleCart(value)} />
         <div
           ref={this.header}
-          className={`d-flex header align-items-center justify-content-around position-relative ${
-            transparent ? '' : 'invert'
-          }`}
+          className={`d-flex header align-items-center justify-content-between position-relative`}
         >
           <div className="d-none d-sm-flex">
             <Link href="/collection">
@@ -138,7 +136,7 @@ class Header extends Component {
             </Link>
             <Link href="http://jquense.github.io/react-big-calendar/examples/index.html#resource">
               <a style={{color: `white`}} href="http://jquense.github.io/react-big-calendar/examples/index.html#resource" className="mr-4">
-                1x1 Consultation
+                1x1
               </a>
             </Link>
             <Link href="/about">
@@ -156,7 +154,7 @@ class Header extends Component {
               style={{width: `3rem`}}
             />
             <Link href="/">
-              <img src="/images/logo.svg" width="75%"></img>
+              <img src="/images/logo.svg" width="50%"></img>
             </Link>
           </div>
           <div className="d-flex">

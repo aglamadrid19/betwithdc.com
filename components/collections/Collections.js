@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Link from 'next/link';
 import Head from 'next/head';
 import { connect } from 'react-redux';
+import { addToCart } from '../../store/actions/cartActions';
 
 class Collections extends Component {
   constructor(props) {
@@ -11,6 +12,9 @@ class Collections extends Component {
     this.page = React.createRef();
 
     this.handleScroll = this.handleScroll.bind(this);
+
+    this.handleAddToCart = this.handleAddToCart.bind(this);
+
   }
 
   componentDidMount() {
@@ -41,40 +45,47 @@ class Collections extends Component {
     window.requestAnimationFrame(animate);
   }
 
-  renderSidebar() {
-    const { categories } = this.props;
-
-    return (
-      <>
-      {categories.map(category => (
-      <div key={category.id} className="custom-container">
-        <div className="row">
-          <div className="col-2 d-none d-lg-block position-relative">
-            <p className="font-size-title font-weight-medium mb-3">
-              {category.name}
-            </p>
-            <Link href={`/collection#${category.slug}`}>
-              <div className="mb-5">
-                <div className="d-flex">
-                  <p className="mb-2 position-relative cursor-pointer">
-                    Products
-                    <span
-                      className="position-absolute font-size-tiny text-right"
-                      style={{ right: '-12px', top: '-4px' }}
-                    >
-                      {category.count}
-                    </span>
-                  </p>
-                </div>
-              </div>
-            </Link>
-          </div>
-        </div>
-      </div>
-      ))}
-    </>
-    )
+  handleAddToCart() {
+    const { product } = this.props
+    const { selectedOptions } = this.state;
+    this.props.dispatch(addToCart(product.id, 1, selectedOptions))
+    console.log("Miau")
   }
+
+  // renderSidebar() {
+  //   const { categories } = this.props;
+
+  //   return (
+  //     <>
+  //     {categories.map(category => (
+  //     <div key={category.id} style={{margin: `0rem 6rem 0rem 6rem`}}>
+  //       <div className="row">
+  //         <div className="col-2 d-none d-lg-block position-relative">
+  //           <p className="font-size-title font-weight-medium mb-3">
+  //             {category.name}
+  //           </p>
+  //           <Link href={`/collection#${category.slug}`}>
+  //             <div className="mb-5">
+  //               <div className="d-flex">
+  //                 <p className="mb-2 position-relative cursor-pointer">
+  //                   Products
+  //                   <span
+  //                     className="position-absolute font-size-tiny text-right"
+  //                     style={{ right: '-12px', top: '-4px' }}
+  //                   >
+  //                     {category.count}
+  //                   </span>
+  //                 </p>
+  //               </div>
+  //             </div>
+  //           </Link>
+  //         </div>
+  //       </div>
+  //     </div>
+  //     ))}
+  //   </>
+  //   )
+  // }
 
   /**
   * Filter products by category
@@ -106,8 +117,7 @@ class Collections extends Component {
               <div className="row mb-5 collection-1">
                 { this.filterProductsByCat(category.slug).map(product => (
                   <div key={product.id} className="col-6 col-sm-4 col-md-3">
-                    <Link href="/product/[permalink]" as={`/product/${product.permalink}`}>
-                      <a className="mb-5 d-block font-color-black cursor-pointer">
+                      <div className="mb-5 d-block font-color-black cursor-pointer">
                         <div
                           className="mb-3"
                           style={{
@@ -121,11 +131,15 @@ class Collections extends Component {
                         <p className="mb-2 font-color-medium">
                           {product.description.replace(reg, '')}
                         </p>
-                        <p className="font-size-subheader font-weight-medium pb-2 borderbottom border-color-black">
-                          {product.price.formatted_with_symbol}
+                        <p className="font-size-subheader font-weight-medium pb-2">
+                          <button onClick={this.handleAddToCart}
+                            className="h-56 bg-black font-color-white pl-4 pr-4 d-flex align-items-center justify-content-center flex-grow-1" type="button" style={{width: `100%`}}>
+                            <span>
+                              {product.price.formatted_with_symbol}
+                            </span>
+                          </button>
                         </p>
-                      </a>
-                    </Link>
+                      </div>
                   </div>
                 ))}
               </div>
@@ -148,7 +162,7 @@ class Collections extends Component {
             className="position-fixed left-0 right-0"
             style={{ top: '7.5rem' }}
           >
-            { this.renderSidebar() }
+            {/* { this.renderSidebar() } */}
           </div>
 
           {/* Main Content */}

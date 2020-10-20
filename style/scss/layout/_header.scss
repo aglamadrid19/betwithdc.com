@@ -3,7 +3,7 @@ header {
 }
 
 .header {
-  padding: 1.5rem 1rem;
+  padding: 1.5rem 3rem;
   background-color: black;
   // transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out,
   //   filter 0.01s linear 0.2s;
@@ -17,7 +17,7 @@ header {
   // }
 
   @include small-xs {
-    padding: 1.25rem 1.5rem 1.25rem 1rem;
+    padding: 1.25rem 2rem 1.25rem 2rem;
   }
 
   .logo-container {
