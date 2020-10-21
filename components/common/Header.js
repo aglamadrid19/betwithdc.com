@@ -128,7 +128,7 @@ class Header extends Component {
         <Cart isOpen={showCart} toggle={value => this.toggleCart(value)} />
         <div
           ref={this.header}
-          className={`d-flex header align-items-center justify-content-between position-relative`}
+          className={`d-flex header align-items-center justify-content-around position-relative`}
         >
           <div className="d-none d-sm-flex">
             {/* <Link href="/collection">
@@ -145,16 +145,18 @@ class Header extends Component {
               </a>
             </Link>
           </div>
-          <div className="logo-container">
+          <div className="d-lg-none">
             <img
               src={`/icon/${showMobileMenu ? 'cross' : 'menu'}.svg`}
               onClick={this.toggleMobileMenu}
-              className="mr-1 d-block d-sm-none"
+              className="float-left d-sm-none"
               alt="Menu icon"
               style={{width: `3rem`}}
             />
+          </div>
+          <div className="logo-container" style={{justifyContent: `center`}}>
             <Link href="/">
-              <img src="/images/logo.svg" width="50%"></img>
+              <img className="mx-auto d-block" src="/images/filename.png"></img>
             </Link>
           </div>
           <div className="d-flex">
