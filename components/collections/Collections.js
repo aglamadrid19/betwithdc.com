@@ -167,9 +167,9 @@ class Collections extends Component {
           </div>
 
           {/* Main Content */}
-          <div ref={this.page} className="custom-container">
+          <div ref={this.page} className="custom-container" style={{maxWidth: `1050px`}}>
             <div className="row">
-              <div className="col">
+              <div className="col-12">
                 { this.renderCollection() }
               </div>
             </div>
