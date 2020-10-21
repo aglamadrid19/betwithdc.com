@@ -124,7 +124,7 @@ class Header extends Component {
     const { transparent, cart } = this.props;
 
     return (
-      <header className="sticky-top top-0 left-0 right-0 font-weight-semibold no-print">
+      <header className="top-0 left-0 right-0 font-weight-semibold no-print">
         <Cart isOpen={showCart} toggle={value => this.toggleCart(value)} />
         <div
           ref={this.header}
@@ -154,7 +154,7 @@ class Header extends Component {
               style={{width: `3rem`}}
             />
           </div>
-          <div className="logo-container" style={{justifyContent: `center`}}>
+          <div className="logo-container" style={{justifyContent: `center`, marginRight: `1em`}}>
             <Link href="/">
               <img className="mx-auto d-block" src="/images/filename.png"></img>
             </Link>

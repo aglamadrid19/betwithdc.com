@@ -49,30 +49,12 @@ export default class HeroSection extends React.Component {
   render() {
     return (
       
-      <div className="hero-section">
-        <div className="bg-brand300 position-relative py-md-5">
+      <div className="bg-brand300 pb-3 pt-3">
           {/* Image Absolute */}
-          <div className="position-md-absolute left-0 bottom-0 right-0">
-            <div className="custom-container px-0">
-              <div className="row">
-                <div className="col-md-5 offset-md-7">
-                  <div className="position-relative">
-                    <div className="position-md-absolute right-0 left-0 bottom-0">
-                      <div
-                        ref={this.image}
-                        className="hero-section--image"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
           {/* Content */}
-          <div ref={this.exploreContainer} className="custom-container py-md-5">
-            <div className="row py-5">
-              <div className="col-12 col-md-6 py-5">
+          <div ref={this.exploreContainer} className="container">
+            <div className="row align-items-center flex-column-reverse flex-md-row">
+              <div className="col-md-6 pt-5">
                 <p
                   className="font-size-display3 font-weight-light mb-4"
                   style={{ maxWidth: '20rem' }}
@@ -88,10 +70,12 @@ export default class HeroSection extends React.Component {
                   </Link>
                 </div>
               </div>
+              <div className="col-md-6">
+                <img src="/images/betwithdc - hero image 1.jpg" className="img-fluid rounded" width="600px" style={{objectFit: "cover", height: `55vh`}}></img>
+              </div>
             </div>
-          </div>
+            </div>
         </div>
-      </div>
     );
   }
 }
