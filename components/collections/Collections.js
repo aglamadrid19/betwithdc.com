@@ -111,13 +111,15 @@ class Collections extends Component {
       <div className="collection">
         {categories.map(category => (
           <div key={category.id}>
-              <p className="font-size-title font-weight-medium mb-4" id={category.slug}>
+              {/* <p className="font-size-title font-weight-medium mb-4" id={category.slug}>
                 {category.name}
-              </p>
-              <div className="row mb-5 collection-1">
+              </p> */}
+              <div className="row"
+                style={{marginBottom: `3em`}}
+              >
                 { this.filterProductsByCat(category.slug).map(product => (
-                  <div key={product.id} className="col-6 col-sm-4 col-md-3">
-                      <div className="mb-5 d-block font-color-black cursor-pointer">
+                  <div key={product.id} className="col">
+                      <div className="col d-block font-color-black">
                         <div
                           className="mb-3"
                           style={{
@@ -168,7 +170,7 @@ class Collections extends Component {
           {/* Main Content */}
           <div ref={this.page} className="custom-container">
             <div className="row">
-              <div className="col-12 col-lg-10 offset-lg-2">
+              <div className="col">
                 { this.renderCollection() }
               </div>
             </div>
