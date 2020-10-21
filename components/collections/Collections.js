@@ -110,10 +110,10 @@ class Collections extends Component {
     return (
       <div className="collection">
         {categories.map(category => (
-          <div key={category.id}>
-              {/* <p className="font-size-title font-weight-medium mb-4" id={category.slug}>
-                {category.name}
-              </p> */}
+          // <div key={category.id}>
+          //     {/* <p className="font-size-title font-weight-medium mb-4" id={category.slug}>
+          //       {category.name}
+          //     </p> */}
               <div className="row"
                 style={{marginBottom: `3em`}}
               >
@@ -145,7 +145,6 @@ class Collections extends Component {
                   </div>
                 ))}
               </div>
-          </div>
         ))}
       </div>
     )

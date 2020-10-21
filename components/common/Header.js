@@ -131,9 +131,9 @@ class Header extends Component {
           className={`d-flex header align-items-center justify-content-between position-relative`}
         >
           <div className="d-none d-sm-flex">
-            <Link href="/collection">
+            {/* <Link href="/collection">
               <a style={{color: `white`}} href="/collection" className="mr-4">Packages</a>
-            </Link>
+            </Link> */}
             <Link href="http://jquense.github.io/react-big-calendar/examples/index.html#resource">
               <a style={{color: `white`}} href="http://jquense.github.io/react-big-calendar/examples/index.html#resource" className="mr-4">
                 1x1

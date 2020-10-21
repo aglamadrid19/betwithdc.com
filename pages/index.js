@@ -22,7 +22,7 @@ const Home = () => (
     <HeroSection />
     <Collections/>
     {/* <HomeBanner /> */}
-    <CategoryBanner />
+    {/* <CategoryBanner /> */}
     <ProductsBanner />
     <ExploreBanner />
     <SocialMedia />
