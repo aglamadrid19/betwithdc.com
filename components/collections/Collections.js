@@ -46,9 +46,9 @@ class Collections extends Component {
   }
 
   handleAddToCart() {
-    const { product } = this.props
-    const { selectedOptions } = this.state;
-    this.props.dispatch(addToCart(product.id, 1, selectedOptions))
+    // const { product } = this.props
+    // const { selectedOptions } = this.state;
+    // this.props.dispatch(addToCart(product.id, 1, selectedOptions))
     console.log("Miau")
   }
 

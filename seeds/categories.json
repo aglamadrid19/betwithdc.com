@@ -1,14 +1,22 @@
 [
   {
-    "slug": "facial-products",
-    "name": "Facial Products"
+    "slug": "kbo",
+    "name": "KBO"
   },
   {
-    "slug": "hair-products",
-    "name": "Hair Products"
+    "slug": "ufc",
+    "name": "UFC"
   },
   {
-    "slug": "body-products",
-    "name": "Body Products"
+    "slug": "nfl",
+    "name": "NFL"
+  },
+  {
+    "slug": "mlb",
+    "name": "MLB"
+  },
+  {
+    "slug": "nba",
+    "name": "NBA"
   }
 ]
