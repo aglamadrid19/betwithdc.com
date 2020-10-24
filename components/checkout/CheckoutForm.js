@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {PaymentRequestButtonElement, useStripe} from '@stripe/react-stripe-js';
 import { connect } from 'react-redux';
+import PaymentIntent from '../checkout/PaymentIntent'
 
 const CheckoutForm = (props) => {
     const stripe = useStripe();
@@ -27,6 +28,7 @@ const CheckoutForm = (props) => {
         }
     }, [stripe]);
     if (paymentRequest) {
+        PaymentIntent
         return <PaymentRequestButtonElement options={{paymentRequest}} />
     }
     return (
