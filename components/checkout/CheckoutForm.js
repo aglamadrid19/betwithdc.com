@@ -31,7 +31,17 @@ const CheckoutForm = () => {
   }
 
   // Use a traditional checkout form.
-  return 'Buy Now';
+  return (
+    <button onClick={this.handleAddToCart}
+        className="h-56 bg-black font-color-white pl-4 pr-4 d-flex align-items-center justify-content-center flex-grow-1" 
+        type="button" 
+        style={{width: `100%`}}
+    >
+        <Elements stripe={stripePromise}>
+            <CheckoutForm />
+        </Elements>
+    </button>  
+  )
 }
 
 export default connect(state => state)(CheckoutForm);

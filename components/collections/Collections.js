@@ -83,6 +83,9 @@ class Collections extends Component {
                           {product.description.replace(reg, '')}
                         </p>
                         <p className="text-center font-size-subheader font-weight-medium pb-2">
+                          <p className="font-size-subheader font-weight-medium pb-2 borderbottom border-color-black">
+                            {product.price.formatted_with_symbol}
+                          </p>
                           <Elements stripe={stripePromise}>
                             <CheckoutForm />
                           </Elements>
