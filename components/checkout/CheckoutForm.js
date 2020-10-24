@@ -13,7 +13,7 @@ const CheckoutForm = () => {
         currency: 'usd',
         total: {
           label: 'Demo total',
-          amount: 1999,
+          amount: 10,
         },
         requestPayerName: true,
         requestPayerEmail: true,
