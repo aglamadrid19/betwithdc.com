@@ -134,11 +134,6 @@ class Header extends Component {
             {/* <Link href="/collection">
               <a style={{color: `white`}} href="/collection" className="mr-4">Packages</a>
             </Link> */}
-            <Link href="/collection">
-              <a style={{color: `white`}} href="" className="mr-4">
-                Packages 
-              </a>
-            </Link>
             <Link href="http://jquense.github.io/react-big-calendar/examples/index.html#resource">
               <a style={{color: `white`}} href="http://jquense.github.io/react-big-calendar/examples/index.html#resource" className="mr-4">
                 1x1
