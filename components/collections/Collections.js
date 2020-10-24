@@ -84,12 +84,9 @@ class Collections extends Component {
                           {product.description.replace(reg, '')}
                         </p>
                         <p className="font-size-subheader font-weight-medium pb-2">
-                          <button onClick={this.handleAddToCart}
-                            className="h-56 bg-black font-color-white pl-4 pr-4 d-flex align-items-center justify-content-center flex-grow-1" type="button" style={{width: `100%`}}>
-                            <Elements stripe={stripePromise}>
-                              <CheckoutForm />
-                            </Elements>
-                          </button>
+                          <Elements stripe={stripePromise}>
+                            <CheckoutForm />
+                          </Elements>
                         </p>
                       </div>
                   </div>
