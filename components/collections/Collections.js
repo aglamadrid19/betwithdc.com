@@ -77,10 +77,10 @@ class Collections extends Component {
                           >
                           </div>
                         </Link>
-                        <p className="font-size-subheader mb-2 font-weight-medium">
+                        <p className="text-center font-size-subheader mb-2 font-weight-medium">
                           {product.name}
                         </p>
-                        <p className="mb-2 font-color-medium">
+                        <p className="text-center mb-2 font-color-medium">
                           {product.description.replace(reg, '')}
                         </p>
                         <p className="text-center font-size-subheader font-weight-medium pb-2">
