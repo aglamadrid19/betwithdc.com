@@ -18,8 +18,17 @@ const CheckoutForm = () => {
         requestPayerName: true,
         requestPayerEmail: true,
       });
+      pr.canMakePayment().then(result => {
+        if (result) {
+          setPaymentRequest(pr);
+        }
+      });
     }
   }, [stripe]);
+  
+  if (paymentRequest) {
+    return <PaymentRequestButtonElement options={{paymentRequest}} />
+  }
 
   // Use a traditional checkout form.
   return 'Insert your form or button component here.';
