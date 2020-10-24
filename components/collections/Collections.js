@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Link from 'next/link';
-import Head from 'next/head';
 import { connect } from 'react-redux';
 import { addToCart } from '../../store/actions/cartActions';
 import {Elements} from '@stripe/react-stripe-js';
