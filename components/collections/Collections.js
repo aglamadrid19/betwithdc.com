@@ -64,8 +64,8 @@ class Collections extends Component {
               <div className="row"
                 style={{marginBottom: `3em`}}
               >
-                { this.filterProductsByCat(category.slug).map(product => (
-                  <div key={product.id} className="col-sm">
+                {this.filterProductsByCat(category.slug).map(product => (
+                  <div key={product.id} className="col-sm" style={{marginBottom: `1.5em`}}>
                       <div className="col d-block font-color-black">
                         <Link href="/product/[permalink]" as={`/product/${product.permalink}`}>
                           <div
