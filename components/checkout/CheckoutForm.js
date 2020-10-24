@@ -14,7 +14,7 @@ const CheckoutForm = (props) => {
             currency: 'usd',
             total: {
             label: props.label,
-            amount: props.price
+            amount: props.price * 100
             },
             requestPayerName: true,
             requestPayerEmail: true,
