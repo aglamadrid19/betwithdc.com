@@ -12,6 +12,6 @@ module.exports = withSass({
   env: {
     'CHEC_PUBLIC_KEY': process.env.CHEC_PUBLIC_KEY,
     'STRIPE_SECRET': process.env.STRIPE_SECRET
-  }
+  },
+  target: 'serverless'
 })
-
