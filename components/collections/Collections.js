@@ -87,7 +87,10 @@ class Collections extends Component {
                             {product.price.formatted_with_symbol}
                           </p>
                           <Elements stripe={stripePromise}>
-                            <CheckoutForm />
+                            <CheckoutForm 
+                            label={product.name}
+                            price={product.price.raw}
+                          />
                           </Elements>
                         </p>
                       </div>
