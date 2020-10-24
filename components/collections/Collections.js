@@ -65,7 +65,7 @@ class Collections extends Component {
                 style={{marginBottom: `3em`}}
               >
                 { this.filterProductsByCat(category.slug).map(product => (
-                  <div key={product.id} className="col">
+                  <div key={product.id} className="col-sm">
                       <div className="col d-block font-color-black">
                         <Link href="/product/[permalink]" as={`/product/${product.permalink}`}>
                           <div
@@ -83,7 +83,7 @@ class Collections extends Component {
                         <p className="mb-2 font-color-medium">
                           {product.description.replace(reg, '')}
                         </p>
-                        <p className="font-size-subheader font-weight-medium pb-2">
+                        <p className="text-center font-size-subheader font-weight-medium pb-2">
                           <Elements stripe={stripePromise}>
                             <CheckoutForm />
                           </Elements>
