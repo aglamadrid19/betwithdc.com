@@ -3,6 +3,11 @@ import Link from 'next/link';
 import Head from 'next/head';
 import { connect } from 'react-redux';
 import { addToCart } from '../../store/actions/cartActions';
+import {Elements} from '@stripe/react-stripe-js';
+import {loadStripe} from '@stripe/stripe-js';
+import CheckoutForm from '../../components/checkout/CheckoutForm';
+
+const stripePromise = loadStripe("pk_live_XKjxjBMjc0PgJpHXkDF1mxaB", {apiVersion: "2020-10-24"});
 
 class Collections extends Component {
   constructor(props) {
@@ -82,7 +87,9 @@ class Collections extends Component {
                           <button onClick={this.handleAddToCart}
                             className="h-56 bg-black font-color-white pl-4 pr-4 d-flex align-items-center justify-content-center flex-grow-1" type="button" style={{width: `100%`}}>
                             <span>
-                              {product.price.formatted_with_symbol}
+                            <Elements stripe={stripePromise}>
+                              <CheckoutForm />
+                            </Elements>
                             </span>
                           </button>
                         </p>

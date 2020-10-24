@@ -31,7 +31,7 @@ const CheckoutForm = () => {
   }
 
   // Use a traditional checkout form.
-  return 'Insert your form or button component here.';
+  return 'Buy Now';
 }
 
 export default connect(state => state)(CheckoutForm);
