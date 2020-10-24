@@ -7,12 +7,8 @@ import { addToCart } from '../../store/actions/cartActions';
 class Collections extends Component {
   constructor(props) {
     super(props);
-
-    this.sidebar = React.createRef();
     this.page = React.createRef();
-
     this.handleAddToCart = this.handleAddToCart.bind(this);
-
   }
 
   componentDidMount() {
@@ -23,18 +19,20 @@ class Collections extends Component {
     window.removeEventListener('scroll', this.handleScroll);
   }
 
+  /**
+   * Add to Cart
+   */
   handleAddToCart() {
-    // const { product } = this.props
-    // const { selectedOptions } = this.state;
-    // this.props.dispatch(addToCart(product.id, 1, selectedOptions))
-    console.log("Miau")
+    const { product } = this.props
+    const { selectedOptions } = this.state;
+    this.props.dispatch(addToCart(product.id, 1, selectedOptions))
   }
 
 
   /**
   * Filter products by category
   */
-   filterProductsByCat(catSlug) {
+  filterProductsByCat(catSlug) {
     const { categories, products } = this.props;
 
     const cat = categories.find(category => category.slug === catSlug);
@@ -64,13 +62,16 @@ class Collections extends Component {
                 { this.filterProductsByCat(category.slug).map(product => (
                   <div key={product.id} className="col">
                       <div className="col d-block font-color-black">
-                        <div
-                          className="mb-3"
-                          style={{
-                            paddingBottom: '125%',
-                            background: `url("${product.media.source}") center center/cover`
-                          }}
-                        />
+                        <Link href="/product/[permalink]" as={`/product/${product.permalink}`}>
+                          <div
+                            className="mb-3 cursor-pointer"
+                            style={{
+                              paddingBottom: '125%',
+                              background: `url("${product.media.source}") center center/cover`
+                            }}
+                          >
+                          </div>
+                        </Link>
                         <p className="font-size-subheader mb-2 font-weight-medium">
                           {product.name}
                         </p>
@@ -98,18 +99,14 @@ class Collections extends Component {
   render() {
     return (
       <div className="py-5 my-5">
-        <Head>
-          <title>Collections</title>
-        </Head>
         <div className="py-4">
-          {/* Sidebar */}
-          <div
+          {/* <div
             ref={this.sidebar}
             className="position-fixed left-0 right-0"
             style={{ top: '7.5rem' }}
           >
-            {/* { this.renderSidebar() } */}
-          </div>
+            { this.renderSidebar() }
+          </div> */}
 
           {/* Main Content */}
           <div ref={this.page} className="custom-container" style={{maxWidth: `1050px`}}>
@@ -119,7 +116,6 @@ class Collections extends Component {
               </div>
             </div>
           </div>
-
         </div>
       </div>
     );

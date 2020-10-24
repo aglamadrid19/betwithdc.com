@@ -9,7 +9,7 @@ import Animation from '../cart/Animation';
 const duration = 300;
 
 const defaultStyle = {
-  zIndex: '-1',
+  zIndex: '2',
   transition: `height ${duration}ms ease-in-out`,
   height: 0
 };
@@ -27,7 +27,7 @@ const mobileMenuLinks = [
     link: '/'
   },
   {
-    name: 'Shop',
+    name: 'Packages',
     link: '/collection'
   },
   {
@@ -151,7 +151,7 @@ class Header extends Component {
               onClick={this.toggleMobileMenu}
               className="float-left d-sm-none"
               alt="Menu icon"
-              style={{width: `3rem`}}
+              style={{width: `3rem`, zIndex: `-1`}}
             />
           </div>
           <div className="logo-container" style={{justifyContent: `center`, marginRight: `1.6em`}}>

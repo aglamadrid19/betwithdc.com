@@ -4,6 +4,11 @@ import VariantSelector from '../productAssets/VariantSelector';
 import { animateScroll as scroll } from 'react-scroll';
 import { connect } from 'react-redux';
 import { addToCart } from '../../store/actions/cartActions';
+import {Elements} from '@stripe/react-stripe-js';
+import {loadStripe} from '@stripe/stripe-js';
+import CheckoutForm from '../../components/checkout/CheckoutForm';
+
+const stripePromise = loadStripe("pk_live_XKjxjBMjc0PgJpHXkDF1mxaB", {apiVersion: "2020-10-24"});
 
 class ProductDetail extends Component {
   constructor(props) {
@@ -132,7 +137,7 @@ class ProductDetail extends Component {
           </div>
 
         {/* Add to Cart & Price */}
-        <div className="d-flex py-4">
+        {/* <div className="d-flex py-4">
           <button onClick={this.handleAddToCart}
               className="h-56 bg-black font-color-white pl-3 pr-4 d-flex align-items-center flex-grow-1" type="button">
             <span className="flex-grow-1 mr-3 text-center">
@@ -142,7 +147,10 @@ class ProductDetail extends Component {
             ${this.getPrice()}
             </span>
           </button>
-        </div>
+        </div> */}
+        <Elements stripe={stripePromise}>
+          <CheckoutForm />
+        </Elements>
       </div>
     );
   }
