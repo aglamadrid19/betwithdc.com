@@ -12,7 +12,6 @@ const Home = () => (
       <title>Collection - betatdc.com</title>
     </Head>
     <Collections />
-    <ExploreBanner />
     <SocialMedia />
     <Footer />
   </Root>

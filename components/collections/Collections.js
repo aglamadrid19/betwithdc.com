@@ -11,8 +11,6 @@ class Collections extends Component {
     this.sidebar = React.createRef();
     this.page = React.createRef();
 
-    this.handleScroll = this.handleScroll.bind(this);
-
     this.handleAddToCart = this.handleAddToCart.bind(this);
 
   }
@@ -25,26 +23,6 @@ class Collections extends Component {
     window.removeEventListener('scroll', this.handleScroll);
   }
 
-  handleScroll() {
-    const animate = () => {
-      if (!this.page.current) {
-        return;
-      }
-
-      const distance =
-        this.page.current.getBoundingClientRect().bottom -
-        window.innerHeight;
-
-      if (distance < 0) {
-        this.sidebar.current.style.transform = `translateY(${distance}px)`;
-      } else {
-        this.sidebar.current.style.transform = 'translateY(0px)';
-      }
-    };
-
-    window.requestAnimationFrame(animate);
-  }
-
   handleAddToCart() {
     // const { product } = this.props
     // const { selectedOptions } = this.state;
@@ -52,40 +30,6 @@ class Collections extends Component {
     console.log("Miau")
   }
 
-  // renderSidebar() {
-  //   const { categories } = this.props;
-
-  //   return (
-  //     <>
-  //     {categories.map(category => (
-  //     <div key={category.id} style={{margin: `0rem 6rem 0rem 6rem`}}>
-  //       <div className="row">
-  //         <div className="col-2 d-none d-lg-block position-relative">
-  //           <p className="font-size-title font-weight-medium mb-3">
-  //             {category.name}
-  //           </p>
-  //           <Link href={`/collection#${category.slug}`}>
-  //             <div className="mb-5">
-  //               <div className="d-flex">
-  //                 <p className="mb-2 position-relative cursor-pointer">
-  //                   Products
-  //                   <span
-  //                     className="position-absolute font-size-tiny text-right"
-  //                     style={{ right: '-12px', top: '-4px' }}
-  //                   >
-  //                     {category.count}
-  //                   </span>
-  //                 </p>
-  //               </div>
-  //             </div>
-  //           </Link>
-  //         </div>
-  //       </div>
-  //     </div>
-  //     ))}
-  //   </>
-  //   )
-  // }
 
   /**
   * Filter products by category
@@ -110,10 +54,10 @@ class Collections extends Component {
     return (
       <div className="collection">
         {categories.map(category => (
-          // <div key={category.id}>
-          //     {/* <p className="font-size-title font-weight-medium mb-4" id={category.slug}>
-          //       {category.name}
-          //     </p> */}
+          <div key={category.id}>
+               <p className="font-size-title font-weight-medium mb-4" id={category.slug} style={{marginRight: `-8px`,marginLeft: `-8px`}}>
+                 {category.name}
+               </p>
               <div className="row"
                 style={{marginBottom: `3em`}}
               >
@@ -145,6 +89,7 @@ class Collections extends Component {
                   </div>
                 ))}
               </div>
+            </div>
         ))}
       </div>
     )

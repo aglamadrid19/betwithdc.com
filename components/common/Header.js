@@ -134,18 +134,18 @@ class Header extends Component {
             {/* <Link href="/collection">
               <a style={{color: `white`}} href="/collection" className="mr-4">Packages</a>
             </Link> */}
+            <Link href="/collection">
+              <a style={{color: `white`}} href="" className="mr-4">
+                Packages 
+              </a>
+            </Link>
             <Link href="http://jquense.github.io/react-big-calendar/examples/index.html#resource">
               <a style={{color: `white`}} href="http://jquense.github.io/react-big-calendar/examples/index.html#resource" className="mr-4">
                 1x1
               </a>
             </Link>
-            <Link href="/about">
-              <a style={{color: `white`}} href="/about" className="">
-                About
-              </a>
-            </Link>
           </div>
-          <div className="d-lg-none">
+          <div className="d-lg-none d-md-none">
             <img
               src={`/icon/${showMobileMenu ? 'cross' : 'menu'}.svg`}
               onClick={this.toggleMobileMenu}
@@ -154,9 +154,13 @@ class Header extends Component {
               style={{width: `3rem`}}
             />
           </div>
-          <div className="logo-container" style={{justifyContent: `center`, marginRight: `1em`}}>
+          <div className="logo-container" style={{justifyContent: `center`, marginRight: `1.6em`}}>
             <Link href="/">
-              <img className="mx-auto d-block" src="/images/filename.png"></img>
+              <a
+                href=""
+              >
+                <img className="mx-auto d-block" src="/images/filename.png"></img>
+              </a>
             </Link>
           </div>
           <div className="d-flex">

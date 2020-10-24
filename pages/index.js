@@ -23,7 +23,7 @@ const Home = () => (
     <Collections/>
     {/* <HomeBanner /> */}
     {/* <CategoryBanner /> */}
-    <ProductsBanner />
+    {/* <ProductsBanner /> */}
     {/* <ExploreBanner /> */}
     <SocialMedia />
     <Footer />
