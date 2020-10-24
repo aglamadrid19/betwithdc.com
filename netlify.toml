@@ -1,6 +1,6 @@
 [build]
   command = "yarn deploy"
-  functions = "functions"
+  functions = "./functions"
   publish   = "out_publish"
 
 [[plugins]]
