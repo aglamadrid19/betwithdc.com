@@ -1,5 +1,5 @@
 [build]
-  command = "yarn deploy"
+  command = "yarn build && yarn export"
   functions = "./functions"
   publish   = "out"
 
@@ -9,5 +9,4 @@
 [template.environment]
   CHEC_PUBLIC_KEY = "pk_18819955a96172d911ddeab7e489f3b2966610816db9b"
   CHEC_API_URL = "https://api.chec.io"
-  STRIPE_SECRET = "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"
   NODE_ENV = ""

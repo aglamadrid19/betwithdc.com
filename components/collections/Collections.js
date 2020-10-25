@@ -5,6 +5,7 @@ import { addToCart } from '../../store/actions/cartActions';
 import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
 import CheckoutForm from '../../components/checkout/CheckoutForm';
+require('dotenv').config()
 
 const stripePromise = loadStripe("pk_live_XKjxjBMjc0PgJpHXkDF1mxaB", {apiVersion: "2020-10-24"});
 
