@@ -1,7 +1,7 @@
 {
-  "name": "betatdc.com",
-  "license": "Private",
-  "version": "0.1",
+  "name": "commercejs-nextjs-demo-store",
+  "license": "BSD-3-Clause",
+  "version": "0.1.0",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
