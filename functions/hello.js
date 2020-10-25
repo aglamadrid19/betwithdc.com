@@ -1,9 +1,9 @@
-require('dotenv').config()
-exports.handler = async event => {
-  
-  return {
+exports.handler = function(event, context, callback) {
+  // 
+  console.log(event)
+
+  callback(null, {
     statusCode: 200,
-    body: `${console.log(process.env.STRIPE_SECRET)}`
-    
-  }
+    body: JSON.stringify({msg:"important data here"})
+  });
 }
