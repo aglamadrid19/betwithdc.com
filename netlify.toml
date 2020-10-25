@@ -9,6 +9,5 @@
 [template.environment]
   CHEC_PUBLIC_KEY = "pk_18819955a96172d911ddeab7e489f3b2966610816db9b"
   CHEC_API_URL = "https://api.chec.io"
-  CHEC_SECRET_KEY = "sk_18819c9e9216c971b16fbffdff6257e402ea312931339"
   STRIPE_SECRET = "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"
   NODE_ENV = ""
