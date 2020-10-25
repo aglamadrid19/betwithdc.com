@@ -19,7 +19,7 @@
     "@zeit/next-sass": "^1.0.1",
     "body-scroll-lock": "^2.6.4",
     "dotenv": "^8.2.0",
-    "netlify-cli": "^2.65.0",
+    "netlify-cli": "^2.65.7",
     "netlify-plugin-onboarding": "^1.0.0",
     "next": "^9.5.5",
     "next-redux-wrapper": "^6.0.0",
@@ -49,6 +49,7 @@
     "eslint-plugin-import": "2.x",
     "eslint-plugin-jsx-a11y": "6.x",
     "eslint-plugin-react": "7.x",
-    "eslint-plugin-react-hooks": "2.x"
+    "eslint-plugin-react-hooks": "2.x",
+    "netlify-cli": "^2.65.7"
   }
 }
