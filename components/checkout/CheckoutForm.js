@@ -1,17 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {PaymentRequestButtonElement, useStripe} from '@stripe/react-stripe-js';
-import {loadStripe} from '@stripe/stripe-js';
 import { connect } from 'react-redux';
-
-async function PaymentIntent(price) {
-    const stripe = loadStripe('sk_live_YGhmoll9ttZTAepARdXwiQ44');
-    const paymentIntent = await stripe.paymentIntents.create({
-        amount: price,
-        currency: 'usd',
-        // Verify your integration in this guide by including this parameter
-        metadata: {integration_check: 'accept_a_payment'},
-    });
-}
 
 const CheckoutForm = (props) => {
     const stripe = useStripe();
@@ -38,7 +27,6 @@ const CheckoutForm = (props) => {
         }
     }, [stripe]);
     if (paymentRequest) {
-        PaymentIntent()
         return <PaymentRequestButtonElement options={{paymentRequest}} />
     }
     return (

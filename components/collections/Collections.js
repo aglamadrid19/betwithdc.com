@@ -7,7 +7,7 @@ import {loadStripe} from '@stripe/stripe-js';
 import CheckoutForm from '../../components/checkout/CheckoutForm';
 require('dotenv').config()
 
-const stripePromise = loadStripe("pk_live_XKjxjBMjc0PgJpHXkDF1mxaB", {apiVersion: "2020-10-24"});
+const stripePromise = loadStripe("pk_live_515pPezEikLqFqYPgNQvd2KJYIvQVd7RrXfO9yhCyClrg7i6p25sY6KZmhZuwiX0XzG8mvMIx0omcUSJhpkjFnJ0w00yOAzlI9a", {apiVersion: "2020-10-24"});
 
 class Collections extends Component {
   constructor(props) {
@@ -84,7 +84,7 @@ class Collections extends Component {
                           {product.description.replace(reg, '')}
                         </p>
                         <p className="text-center font-size-subheader font-weight-medium pb-2">
-                          <p className="font-size-subheader font-weight-medium pb-2 borderbottom border-color-black">
+                          <p className="text-center font-size-subheader font-weight-medium pb-2 borderbottom border-color-black">
                             {product.price.formatted_with_symbol}
                           </p>
                           <Elements stripe={stripePromise}>
