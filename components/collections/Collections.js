@@ -7,7 +7,7 @@ import {loadStripe} from '@stripe/stripe-js';
 import CheckoutForm from '../../components/checkout/CheckoutForm';
 require('dotenv').config()
 
-const stripePromise = loadStripe("pk_live_515pPezEikLqFqYPgNQvd2KJYIvQVd7RrXfO9yhCyClrg7i6p25sY6KZmhZuwiX0XzG8mvMIx0omcUSJhpkjFnJ0w00yOAzlI9a", {apiVersion: "2020-10-24"});
+const stripePromise = loadStripe("pk_live_515pPezEikLqFqYPgNQvd2KJYIvQVd7RrXfO9yhCyClrg7i6p25sY6KZmhZuwiX0XzG8mvMIx0omcUSJhpkjFnJ0w00yOAzlI9a", {apiVersion: "2020-08-27"});
 
 class Collections extends Component {
   constructor(props) {

@@ -7,3 +7,4 @@
   from = "/api/test"
   to = "/.netlify/functions/hello"
   status = 200
+

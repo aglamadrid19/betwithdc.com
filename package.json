@@ -36,6 +36,7 @@
     "react-transition-group": "^4.3.0",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
+    "stripe": "^8.117.0",
     "swiper": "^5.2.1"
   },
   "devDependencies": {
