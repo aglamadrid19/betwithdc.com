@@ -6,7 +6,7 @@ import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
 import ProductCard from '../products/ProductCard'
 import CheckoutForm from '../../components/checkout/CheckoutForm';
-import {commerce} from '../../lib/commerce'
+// import {commerce} from '../../lib/commerce'
 
 class Collections extends Component {
   constructor(props) {
@@ -27,21 +27,21 @@ class Collections extends Component {
   }
 
   componentDidMount() {
-    this.fetchProducts();
-    this.fetchCart();
+    // this.fetchProducts();
+    // this.fetchCart();
   }
 
   componentWillUnmount() {
     window.removeEventListener('scroll', this.handleScroll);
   }
 
-  fetchCart() {
-    commerce.cart.retrieve().then((cart) => {
-      this.setState({ cart });
-    }).catch((error) => {
-      console.error('There was an error fetching the cart', error);
-    });
-  }
+  // fetchCart() {
+  //   commerce.cart.retrieve().then((cart) => {
+  //     this.setState({ cart });
+  //   }).catch((error) => {
+  //     console.error('There was an error fetching the cart', error);
+  //   });
+  // }
 
   /**
    * Add to Cart
@@ -69,13 +69,13 @@ class Collections extends Component {
  * Fetch products data from Chec and stores in the products data object.
  * https://commercejs.com/docs/sdk/products
  */
-  fetchProducts() {
-    commerce.products.list().then((products) => {
-      this.setState({ products: products.data });
-    }).catch((error) => {
-      console.log('There was an error fetching the products', error);
-    });
-  }
+  // fetchProducts() {
+  //   commerce.products.list().then((products) => {
+  //     this.setState({ products: products.data });
+  //   }).catch((error) => {
+  //     console.log('There was an error fetching the products', error);
+  //   });
+  // }
 
   /**
   * Render collections based on categories available in data

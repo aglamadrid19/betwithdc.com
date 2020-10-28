@@ -16,7 +16,7 @@ const Home = () => (
     </Head>
 
     <HeroSection />
-    <Collections/>
+    <Collections />
     <SocialMedia />
     <Footer />
     {/* <!-- Optional JavaScript -->

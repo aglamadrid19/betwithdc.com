@@ -1,5 +1,3 @@
-
-
 exports.handler = async (event) => {
   const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
@@ -8,7 +6,6 @@ exports.handler = async (event) => {
 
     const paymentIntent = await stripe.paymentIntents.create({
       currency: 'usd',
-      amount: 0100,
       ...paymentDetails,
       confirm: true
     });
