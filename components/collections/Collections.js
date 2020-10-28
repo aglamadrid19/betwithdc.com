@@ -4,15 +4,21 @@ import { connect } from 'react-redux';
 import { addToCart } from '../../store/actions/cartActions';
 import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
+import ProductCard from '../products/ProductCard'
 import CheckoutForm from '../../components/checkout/CheckoutForm';
-require('dotenv').config()
-
-const stripePromise = loadStripe("pk_live_515pPezEikLqFqYPgNQvd2KJYIvQVd7RrXfO9yhCyClrg7i6p25sY6KZmhZuwiX0XzG8mvMIx0omcUSJhpkjFnJ0w00yOAzlI9a", {apiVersion: "2020-08-27"});
+import {commerce} from '../../lib/commerce'
 
 class Collections extends Component {
   constructor(props) {
     super(props);
-    this.page = React.createRef();
+    // this.page = React.createRef();
+
+    this.state = {
+        categories: [],
+        products: [],
+        cart: {},
+    }
+
     this.handleAddToCart = this.handleAddToCart.bind(this);
   }
 
@@ -20,19 +26,31 @@ class Collections extends Component {
     window.addEventListener('scroll', this.handleScroll);
   }
 
+  componentDidMount() {
+    this.fetchProducts();
+    this.fetchCart();
+  }
+
   componentWillUnmount() {
     window.removeEventListener('scroll', this.handleScroll);
+  }
+
+  fetchCart() {
+    commerce.cart.retrieve().then((cart) => {
+      this.setState({ cart });
+    }).catch((error) => {
+      console.error('There was an error fetching the cart', error);
+    });
   }
 
   /**
    * Add to Cart
    */
   handleAddToCart() {
-    const { product } = this.props
-    const { selectedOptions } = this.state;
-    this.props.dispatch(addToCart(product.id, 1, selectedOptions))
+    const { product } = this.props;
+    console.log(product)
+    // this.props.dispatch(addToCart(product.id, 1, selectedOptions))
   }
-
 
   /**
   * Filter products by category
@@ -48,11 +66,25 @@ class Collections extends Component {
   }
 
   /**
+ * Fetch products data from Chec and stores in the products data object.
+ * https://commercejs.com/docs/sdk/products
+ */
+  fetchProducts() {
+    commerce.products.list().then((products) => {
+      this.setState({ products: products.data });
+    }).catch((error) => {
+      console.log('There was an error fetching the products', error);
+    });
+  }
+
+  /**
   * Render collections based on categories available in data
   */
   renderCollection() {
     const { categories } = this.props;
+    const { products } = this.props;
     const reg = /(<([^>]+)>)/ig;
+    // console.log(products)
 
     return (
       <div className="collection">
@@ -66,36 +98,43 @@ class Collections extends Component {
               >
                 {this.filterProductsByCat(category.slug).map(product => (
                   <div key={product.id} className="col-sm" style={{marginBottom: `1.5em`}}>
-                      <div className="col d-block font-color-black">
-                        <Link href="/product/[permalink]" as={`/product/${product.permalink}`}>
-                          <div
-                            className="mb-3 cursor-pointer"
-                            style={{
-                              paddingBottom: '125%',
-                              background: `url("${product.media.source}") center center/cover`
-                            }}
-                          >
-                          </div>
-                        </Link>
-                        <p className="text-center font-size-subheader mb-2 font-weight-medium">
-                          {product.name}
-                        </p>
-                        <p className="text-center mb-2 font-color-medium">
-                          {product.description.replace(reg, '')}
-                        </p>
-                        <p className="text-center font-size-subheader font-weight-medium pb-2">
-                          <p className="text-center font-size-subheader font-weight-medium pb-2 borderbottom border-color-black">
-                            {product.price.formatted_with_symbol}
-                          </p>
-                          <Elements stripe={stripePromise}>
-                            <CheckoutForm 
-                            label={product.name}
-                            price={product.price.raw}
-                          />
-                          </Elements>
-                        </p>
-                      </div>
+                    <ProductCard key={product.id} product={product}></ProductCard>
                   </div>
+                  // <div key={product.id}  >
+                  //     <div className="col d-block font-color-black">
+                  //         <div
+                  //           className="mb-3"
+                  //           style={{
+                  //             paddingBottom: '125%',
+                  //             background: `url("${product.media.source}") center center/cover`
+                  //           }}
+                  //         >
+                  //         </div>
+                  //       <p className="text-center font-size-subheader mb-2 font-weight-medium">
+                  //         {product.name}
+                  //       </p>
+                  //       <p className="text-center mb-2 font-color-medium">
+                  //         {product.description.replace(reg, '')}
+                  //       </p>
+                  //       <p className="text-center font-size-subheader font-weight-medium pb-2">
+                  //         <p className="text-center font-size-subheader font-weight-medium pb-2 borderbottom border-color-black">
+                  //           {product.price.formatted_with_symbol}
+                  //         </p>
+                  //         <Elements stripe={stripePromise}>
+                  //           <CheckoutForm 
+                  //           label={product.name}
+                  //           price={product.price.raw}
+                  //         />
+                  //         </Elements>
+                  //         <button onClick={this.handleAddToCart}
+                  //           className="h-56 bg-black font-color-white pl-3 pr-4 d-flex align-items-center flex-grow-1" type="button">
+                  //           <span className="flex-grow-1 mr-3 text-center">
+                  //             Add to cart
+                  //           </span>
+                  //         </button>
+                  //       </p>
+                  //     </div>
+                  // </div>
                 ))}
               </div>
             </div>

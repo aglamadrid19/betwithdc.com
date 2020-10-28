@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Head from 'next/head';
 import Link from 'next/link';
 import ccFormat from '../../utils/ccFormat';
-import commerce from '../../lib/commerce';
+import {commerce} from '../../lib/commerce';
 import Root from '../../components/common/Root';
 import ShippingForm from '../../components/checkout/common/ShippingForm';
 import PaymentDetails from '../../components/checkout/common/PaymentDetails';

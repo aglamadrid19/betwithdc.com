@@ -1,4 +1,4 @@
-import commerce from '../../lib/commerce';
+import {commerce} from '../../lib/commerce';
 
 import {
   GET_SHIPPING_OPTIONS,

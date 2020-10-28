@@ -2,7 +2,7 @@ import App from 'next/app';
 import React from 'react';
 import '../style/scss/style.scss';
 import { wrapper } from '../store';
-import commerce from '../lib/commerce';
+import {commerce} from '../lib/commerce';
 import collections from '../lib/collections';
 
 class MyApp extends App {

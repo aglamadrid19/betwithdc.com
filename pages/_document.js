@@ -34,14 +34,15 @@ class MyDocument extends Document {
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.0/css/swiper.min.css"
           />
-          <meta property="og:title" content="Commerce.js | Demo storefront" />
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
+          <meta property="og:title" content="betatdc.com" />
           <meta property="og:image" content="https://cdn.chec.io/email/assets/marketing/demo-preview.png" />
-          <meta property="og:description" content="A custom, open source demo storefront built with Next.js and Commerce.js. Take a look!" />
-          <meta property="og:url" content="https://commercejs-demo-store.netlify.app" />
-          <meta property="twitter:title" content="Commerce.js | Demo storefront" />
-          <meta name="twitter:creator" content="@commercejs" />
+          <meta property="og:description" content="A place for all your bets, the parlay king" />
+          <meta property="og:url" content="https://betatdc.com" />
+          <meta property="twitter:title" content="betatdc.com" />
+          {/* <meta name="twitter:creator" content="" /> */}
           <meta property="twitter:image" content="https://cdn.chec.io/email/assets/marketing/demo-preview.png" />
-          <meta property="twitter:description" content="A custom, open source demo storefront built with Next.js and Commerce.js. Take a look!" />
+          <meta property="twitter:description" content="A place for all your bets, the parlay king" />
           <meta name="twitter:card" content="summary_large_image" />
         </Head>
         <body>

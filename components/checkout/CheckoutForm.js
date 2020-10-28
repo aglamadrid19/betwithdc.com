@@ -71,16 +71,14 @@ const CheckoutForm = (props) => {
       }
     }, [stripe]);
     if (paymentRequest) {
-        return <PaymentRequestButtonElement options={{paymentRequest}} />
+        return (
+            <PaymentRequestButtonElement className="mr-5 ml-5 mb-3" options={{paymentRequest}} />
+        )
     }
     return (
-        <button
-            className="h-56 bg-black font-color-white pl-4 pr-4 d-flex align-items-center justify-content-center flex-grow-1" 
-            type="button" 
-            style={{width: `100%`}}
-        >
-            Buy Now
-        </button>  
+    <div className="d-flex justify-content-around mb-3">
+      <p>Apple Pay not supported</p>
+    </div>
     )
 }
 
