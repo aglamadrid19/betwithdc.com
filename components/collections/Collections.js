@@ -48,7 +48,6 @@ class Collections extends Component {
    */
   handleAddToCart() {
     const { product } = this.props;
-    console.log(product)
     // this.props.dispatch(addToCart(product.id, 1, selectedOptions))
   }
 
