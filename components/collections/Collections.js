@@ -92,49 +92,11 @@ class Collections extends Component {
                <p className="font-size-title font-weight-medium mb-4" id={category.slug} style={{marginRight: `-8px`,marginLeft: `-8px`}}>
                  {category.name}
                </p>
-              <div className="row"
-                style={{marginBottom: `3em`}}
-              >
+              <div className="row" style={{marginBottom: `3em`}}>
                 {this.filterProductsByCat(category.slug).map(product => (
                   <div key={product.id} className="col-sm" style={{marginBottom: `1.5em`}}>
                     <ProductCard key={product.id} product={product}></ProductCard>
-                  </div>
-                  // <div key={product.id}  >
-                  //     <div className="col d-block font-color-black">
-                  //         <div
-                  //           className="mb-3"
-                  //           style={{
-                  //             paddingBottom: '125%',
-                  //             background: `url("${product.media.source}") center center/cover`
-                  //           }}
-                  //         >
-                  //         </div>
-                  //       <p className="text-center font-size-subheader mb-2 font-weight-medium">
-                  //         {product.name}
-                  //       </p>
-                  //       <p className="text-center mb-2 font-color-medium">
-                  //         {product.description.replace(reg, '')}
-                  //       </p>
-                  //       <p className="text-center font-size-subheader font-weight-medium pb-2">
-                  //         <p className="text-center font-size-subheader font-weight-medium pb-2 borderbottom border-color-black">
-                  //           {product.price.formatted_with_symbol}
-                  //         </p>
-                  //         <Elements stripe={stripePromise}>
-                  //           <CheckoutForm 
-                  //           label={product.name}
-                  //           price={product.price.raw}
-                  //         />
-                  //         </Elements>
-                  //         <button onClick={this.handleAddToCart}
-                  //           className="h-56 bg-black font-color-white pl-3 pr-4 d-flex align-items-center flex-grow-1" type="button">
-                  //           <span className="flex-grow-1 mr-3 text-center">
-                  //             Add to cart
-                  //           </span>
-                  //         </button>
-                  //       </p>
-                  //     </div>
-                  // </div>
-                ))}
+                  </div>))}
               </div>
             </div>
         ))}

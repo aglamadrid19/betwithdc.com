@@ -3,11 +3,14 @@ import Link from 'next/link';
 import {loadStripe} from '@stripe/stripe-js';
 import {Elements} from '@stripe/react-stripe-js';
 import CheckoutForm from '../../components/checkout/CheckoutForm';
+import {commerce} from '../../lib/commerce'
 
 const stripePromise = loadStripe("pk_live_515pPezEikLqFqYPgsIUyv7IJvB9FolbpzIQgxmhPpWZr0PcFOsYMidIWRz2f7sPZZfr0MylkwyrAmHBTD4OkMisn00VB6X1vUH");
 
 export default function ProductCard({product}) {
   const reg = /(<([^>]+)>)/ig;
+  commerce.cart.refresh().then(cart => console.log(cart));
+
   return (
       <div className="mb-5 d-block font-color-black">
         <div
@@ -26,15 +29,12 @@ export default function ProductCard({product}) {
         </p>
         <p>
           <Elements stripe={stripePromise}>
-            <CheckoutForm 
-              label={product.name}
-              price={product.price.raw}
-            />
+            <CheckoutForm label={product.name} price={product.price.raw}/>
           </Elements>
         </p>
 
         <div className="d-flex justify-content-around">
-          <div class="text-center btn-group btn-group-lg" role="group" style={{width: `100%`}} aria-label="Basic example">
+          <div className="text-center btn-group btn-group-lg" role="group" style={{width: `100%`}} aria-label="Basic example">
             <button type="button" className="h-56 btn btn-dark font-color-white">
               <span className="">
                 <i className="fa fa-credit-card fa-2x fa-fw" aria-hidden="true"></i>
