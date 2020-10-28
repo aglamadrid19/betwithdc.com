@@ -3,9 +3,8 @@ import Link from 'next/link';
 import {loadStripe} from '@stripe/stripe-js';
 import {Elements} from '@stripe/react-stripe-js';
 import CheckoutForm from '../../components/checkout/CheckoutForm';
-import Commerce from '../../lib/commerce'
 
-const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
+const stripePromise = loadStripe("pk_live_515pPezEikLqFqYPgsIUyv7IJvB9FolbpzIQgxmhPpWZr0PcFOsYMidIWRz2f7sPZZfr0MylkwyrAmHBTD4OkMisn00VB6X1vUH");
 
 export default function ProductCard({product}) {
   const reg = /(<([^>]+)>)/ig;

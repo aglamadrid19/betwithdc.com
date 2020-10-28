@@ -6,15 +6,15 @@ const handlePaymentMethodReceived = async (event) => {
   // Send the payment details to our function.
   const paymentDetails = {
       payment_method: event.paymentMethod.id,
-      amount: event.amount
+      amount: event.paymentMethod
   }
+
+  console.log(event)
 
   const response = await fetch('/.netlify/functions/create-payment-intent',
   {   
       method: 'post',
-      headers: {
-          'Content-Type': 'application/json',
-      },
+      headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({ paymentDetails }),
       }).then((res) => {
         return res.json();
