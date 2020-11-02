@@ -7,12 +7,19 @@ import {commerce} from '../../lib/commerce'
 
 const stripePromise = loadStripe("pk_live_515pPezEikLqFqYPgsIUyv7IJvB9FolbpzIQgxmhPpWZr0PcFOsYMidIWRz2f7sPZZfr0MylkwyrAmHBTD4OkMisn00VB6X1vUH");
 
-export default function ProductCard({product}) {
+export default function ProductCard({props, product}) {
   const reg = /(<([^>]+)>)/ig;
-  commerce.cart.refresh().then(cart => console.log(cart));
+  // console.log(props.cart)
+  const { cart } = props;
 
+  function FastCAdd(e) {
+    // Emptying cart first
+    commerce.cart.empty().then(json => console.log(json));
+    commerce.cart.add(product.id, 1).then(json => console.log(json))
+  }
+  
   return (
-      <div className="mb-5 d-block font-color-black">
+      <div className="card mb-5 d-block font-color-black">
         <div
           className="mb-3"
           style={{
@@ -27,29 +34,35 @@ export default function ProductCard({product}) {
         <p className="text-center font-size-subheader font-weight-medium pb-2">
           {product.price.formatted_with_symbol}
         </p>
-        <p>
+        <div>
           <Elements stripe={stripePromise}>
             <CheckoutForm label={product.name} price={product.price.raw}/>
           </Elements>
-        </p>
+        </div>
 
         <div className="d-flex justify-content-around">
           <div className="text-center btn-group btn-group-lg" role="group" style={{width: `100%`}} aria-label="Basic example">
-            <button type="button" className="h-56 btn btn-dark font-color-white">
-              <span className="">
-                <i className="fa fa-credit-card fa-2x fa-fw" aria-hidden="true"></i>
-              </span>
-            </button>
-            <button type="button" className="h-56 btn btn-dark font-color-white">
-              <span className="">
-                <i className="fa fa-paypal fa-2x fa-fw" aria-hidden="true"></i>
-              </span>
-            </button>
-            <button type="button" className="h-56 btn btn-dark font-color-white">
-              <span className="">
-                <i className="fa fa-btc fa-2x fa-fw" aria-hidden="true"></i>
-              </span>
-            </button>
+            <Link href="checkout">
+              <button type="button" className="h-56 btn btn-dark font-color-white" onClick={FastCAdd}>
+                <span className="">
+                  <i className="fa fa-credit-card fa-2x fa-fw" aria-hidden="true"></i>
+                </span>
+              </button>
+            </Link>
+            <Link href="/checkout">
+              <button type="button" className="h-56 btn btn-dark font-color-white">
+                <span className="">
+                  <i className="fa fa-paypal fa-2x fa-fw" aria-hidden="true"></i>
+                </span>
+              </button>
+            </Link>
+            <Link href="checkout/">
+              <button type="button" className="h-56 btn btn-dark font-color-white">
+                <span className="">
+                  <i className="fa fa-btc fa-2x fa-fw" aria-hidden="true"></i>
+                </span>
+              </button>
+            </Link>
           </div>
         </div>
       </div>

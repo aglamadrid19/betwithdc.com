@@ -7,8 +7,6 @@ import collections from '../lib/collections';
 
 class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {
-    // Fetch data on load
-    // Fetch categories
     const categoriesResponse = await commerce.categories.list();
 
     // Match static data record to API data to find category name

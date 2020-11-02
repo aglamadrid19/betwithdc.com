@@ -18,8 +18,6 @@ class Collections extends Component {
         products: [],
         cart: {},
     }
-
-    this.handleAddToCart = this.handleAddToCart.bind(this);
   }
 
   componentDidMount() {
@@ -29,26 +27,6 @@ class Collections extends Component {
   componentDidMount() {
     // this.fetchProducts();
     // this.fetchCart();
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleScroll);
-  }
-
-  // fetchCart() {
-  //   commerce.cart.retrieve().then((cart) => {
-  //     this.setState({ cart });
-  //   }).catch((error) => {
-  //     console.error('There was an error fetching the cart', error);
-  //   });
-  // }
-
-  /**
-   * Add to Cart
-   */
-  handleAddToCart() {
-    const { product } = this.props;
-    // this.props.dispatch(addToCart(product.id, 1, selectedOptions))
   }
 
   /**
@@ -95,7 +73,7 @@ class Collections extends Component {
               <div className="row" style={{marginBottom: `3em`}}>
                 {this.filterProductsByCat(category.slug).map(product => (
                   <div key={product.id} className="col-sm" style={{marginBottom: `1.5em`}}>
-                    <ProductCard key={product.id} product={product}></ProductCard>
+                    <ProductCard key={product.id} props={this.props} product={product}></ProductCard>
                   </div>))}
               </div>
             </div>

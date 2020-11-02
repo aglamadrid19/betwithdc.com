@@ -9,8 +9,6 @@ const handlePaymentMethodReceived = async (event) => {
       amount: event.paymentMethod
   }
 
-  console.log(event)
-
   const response = await fetch('/.netlify/functions/create-payment-intent',
   {   
       method: 'post',
