@@ -41,7 +41,7 @@ class Confirm extends Component {
 
   render() {
     const { orderReceipt } = this.props;
-
+    console.log(orderReceipt)
     if (!orderReceipt) {
       return '';
     }
@@ -52,7 +52,7 @@ class Confirm extends Component {
           {/* Row */}
           <div className="row mt-4">
             <div className="col-12 col-md-10 col-lg-6 offset-md-1 offset-lg-0">
-              <div className="h-100 d-flex flex-column align-items-center justify-content-center py-5 px-4 px-sm-5">
+              <div className="h-100 d-flex flex-column align-items-center py-5 px-4 px-sm-5">
                 <div className="bg-success700 h-64 w-64 d-flex rounded-circle align-items-center justify-content-center mb-4">
                   <img src="/icon/check.svg" className="w-40"/>
                 </div>
@@ -71,7 +71,7 @@ class Confirm extends Component {
                       Go back home
                     </button>
                   </Link>
-                  <Link href="/collection">
+                  <Link href="/">
                     <button className="checkout-confirm-buttons h-48 px-3 flex-grow-1 bg-black font-color-white no-print">
                       Continue shopping
                     </button>
@@ -95,13 +95,13 @@ class Confirm extends Component {
                   <div className="border-bottom border-color-gray400 d-flex align-items-start py-4 flex-column flex-sm-row">
                     <div>
                       <p className="font-color-light mr-4 mb-3 mb-sm-0">
-                        Ships to
+                        Customer Information
                       </p>
                     </div>
                     <div className="flex-grow-1">
-                      <p className="font-color-medium">{orderReceipt.shipping.street}</p>
-                      <p className="font-color-medium">{orderReceipt.shipping.town_city}, {orderReceipt.shipping.country_state}</p>
-                      <p className="font-color-medium">{orderReceipt.shipping.postal_zip_code}, {orderReceipt.shipping.country}</p>
+                      <p className="font-color-medium">{orderReceipt.customer.firstname}, {orderReceipt.customer.lastname}</p>
+                      <p className="font-color-medium">{orderReceipt.customer.email}</p>
+                      <p className="font-color-medium">{orderReceipt.extrafields['0']['value']}</p>
                     </div>
                   </div>
                   <div className="py-4 borderbottom border-color-gray400">
@@ -111,9 +111,9 @@ class Confirm extends Component {
                           <p className="mb-2 font-weight-medium">
                             {item.quantity} x {item.product_name}
                           </p>
-                          <p className="font-color-light">
+                          {/* <p className="font-color-light">
                             {item.variants[0].variant_name}: {item.variants[0].option_name}
-                          </p>
+                          </p> */}
                         </div>
                         <div className="text-right font-weight-semibold">
                           {item.line_total.formatted_with_symbol}

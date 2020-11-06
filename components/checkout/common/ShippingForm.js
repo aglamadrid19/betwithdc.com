@@ -22,9 +22,8 @@ export default class ShippingForm extends Component {
   }
 
   render() {
-    const { receiveNewsletter } = this.state;
     const {
-      shippingOptions,
+      // shippingOptions,
       countries = {},
       subdivisions = {},
       deliveryCountry,
@@ -33,6 +32,7 @@ export default class ShippingForm extends Component {
       selectedShippingOption,
       firstName,
       lastName,
+      customerPhone,
       shippingTownCity,
       shippingStreet,
       shippingStreet2,
@@ -68,8 +68,8 @@ export default class ShippingForm extends Component {
             </label>
           </div>
         </div>
-        <div className="row">
-          <div className="col-12 col-sm-6 mb-3">
+        {/* <div className="row"> */}
+          {/* <div className="col-12 col-sm-6 mb-3">
             <label className="w-100">
               <p className="mb-1 font-size-caption font-color-light">
                 Country*
@@ -88,15 +88,15 @@ export default class ShippingForm extends Component {
                 }
               </Dropdown>
             </label>
-          </div>
-          <div className="col-12 col-sm-6 mb-3">
+          </div> */}
+          {/* <div className="col-12 col-sm-6 mb-3">
             <label className="w-100">
               <p className="mb-1 font-size-caption font-color-light">City*</p>
               <input name="shipping[town_city]" value={shippingTownCity} className="rounded-0 w-100" />
             </label>
-          </div>
-        </div>
-        <div className="row">
+          </div> */}
+        {/* </div> */}
+        {/* <div className="row">
           <div className="col-12 col-sm-6 mb-3">
             <label className="w-100">
               <p className="mb-1 font-size-caption font-color-light">
@@ -123,8 +123,8 @@ export default class ShippingForm extends Component {
               />
             </label>
           </div>
-        </div>
-        <div className="row">
+        </div> */}
+        {/* <div className="row">
           <div className="col-12 col-sm-6 mb-3">
             <label className="w-100">
               <p className="mb-1 font-size-caption font-color-light">
@@ -157,14 +157,14 @@ export default class ShippingForm extends Component {
               />
             </label>
           </div>
-        </div>
+        </div> */}
         <div className="row">
           <div className="col-12 col-sm-6 mb-3">
             <label className="w-100">
               <p className="mb-1 font-size-caption font-color-light">
                 Telephone*
               </p>
-              <input className="rounded-0 w-100" />
+              <input name="customer[phone]" value={customerPhone} className="rounded-0 w-100" />
             </label>
           </div>
           <div className="col-12 col-sm-6 mb-3">
@@ -183,10 +183,10 @@ export default class ShippingForm extends Component {
         <div className="row">
           <div className="col-12 mb-3">
             <label className="w-100">
-              <p className="mb-1 font-size-caption font-color-light">
+              {/* <p className="mb-1 font-size-caption font-color-light">
                 Shipping Method*
-              </p>
-              <Dropdown
+              </p> */}
+              {/* <Dropdown
                 name="fulfillment[shipping_method]"
                 value={
                   selectedShippingOption
@@ -194,19 +194,19 @@ export default class ShippingForm extends Component {
                   : ''
                 }
                 placeholder="Select a shipping method"
-              >
-                {
+              > */}
+                {/* {
                   shippingOptions.map(option => (
                     <option key={option.id} value={option.id}>
                     { `${option.description} - $${option.price.formatted_with_code}` }
                     </option>
                   ))
-                }
-              </Dropdown>
+                } */}
+              {/* </Dropdown> */}
             </label>
           </div>
         </div>
-        <div
+        {/* <div
           onClick={this.toggleNewsletter}
           className="d-flex mb-4 flex-nowrap cursor-pointer"
         >
@@ -220,26 +220,27 @@ export default class ShippingForm extends Component {
             Rest assured, you will not be flooded, we only send one newsletter
             per month approximately 🙂
           </p>
-        </div>
-        <label className="w-100 mb-3">
+        </div> */}
+        {/* <label className="w-100 mb-3">
           <p className="mb-1 font-size-caption font-color-light">
             Order Notes (optional)
           </p>
           <textarea name="orderNotes" value={orderNotes} className="rounded-0 w-100" />
-        </label>
+        </label> */}
       </>
     );
   }
 }
 
 ShippingForm.propTypes = {
-  shippingOptions: PropTypes.array,
-  countries: PropTypes.object,
+  // shippingOptions: PropTypes.array,
+  // countries: PropTypes.object,
   subdivisions: PropTypes.object,
   deliveryCountry: PropTypes.string,
   deliveryRegion: PropTypes.string,
   firstName: PropTypes.string,
   lastName: PropTypes.string,
+  phone: PropTypes.string,
   selectedShippingOptionId: PropTypes.string,
   selectedShippingOption: PropTypes.object,
   shippingTownCity: PropTypes.string,

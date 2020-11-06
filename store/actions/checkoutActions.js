@@ -1,9 +1,9 @@
 import {commerce} from '../../lib/commerce';
 
 import {
-  GET_SHIPPING_OPTIONS,
+  // GET_SHIPPING_OPTIONS,
   GENERATE_CHECKOUT_TOKEN,
-  REMOVE_SHIPPING_OPTIONS,
+  // REMOVE_SHIPPING_OPTIONS,
   UPDATE_CHECKOUT_LIVE_OBJECT,
   ABORT_CHECKOUT,
   CAPTURE_ORDER_SUCCESS,
@@ -11,23 +11,24 @@ import {
 
 // Use commerce.js checkout helper, commerce.checkout.getShippingOptions
 // to return list of available shipping methods for the provided checkout token
-export const getShippingOptionsForCheckout = (checkoutId, country = 'US') => (dispatch) => {
-  return commerce.checkout.getShippingOptions(checkoutId, { country })
-    .then(shippingOptions => {
-      dispatch({
-        type: GET_SHIPPING_OPTIONS,
-        payload: shippingOptions,
-      })
-      return shippingOptions;
-    })
-    .catch(error => {
-      dispatch({ // assuming there are no available shipping options
-        type: REMOVE_SHIPPING_OPTIONS
-      })
-      console.log('error while fetching list of available shipping options', error);
-      throw error;
-    })
-}
+// export const getShippingOptionsForCheckout = (checkoutId) => (dispatch) => {
+//   return commerce.checkout.getShippingOptions(checkoutId)
+//     .then(shippingOptions => {
+//       dispatch({
+//         type: GET_SHIPPING_OPTIONS,
+//         payload: shippingOptions,
+//       })
+//       console.log(shippingOptions)
+//       return shippingOptions;
+//     })
+//     .catch(error => {
+//       dispatch({ // assuming there are no available shipping options
+//         type: REMOVE_SHIPPING_OPTIONS
+//       })
+//       console.log('error while fetching list of available shipping options', error);
+//       throw error;
+//     })
+// }
 
 // Use commerce.js checkout generateToken method to
 // generate a checkout token object from a cart.id

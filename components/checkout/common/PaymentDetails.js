@@ -23,14 +23,13 @@ export default class PaymentDetails extends Component {
           Payment Detail
         </p>
         <div className="border border-color-gray400 mb-5">
-          {(gateways && gateways.available['test_gateway']) ?
+          {(gateways) ?
             (<div className="borderbottom border-color-gray500">
               <label
-                onClick={() => onChangeGateway('test_gateway')}
                 className={'p-3 d-flex align-items-center cursor-pointer'}
               >
                 <Radiobox
-                  checked={selectedGateway === 'test_gateway'}
+                  checked='true'
                   className="mr-3"
                 />
                 <p className="font-weight-medium">Credit/debit card</p>

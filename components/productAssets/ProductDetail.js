@@ -8,8 +8,6 @@ import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
 import CheckoutForm from '../../components/checkout/CheckoutForm';
 
-const stripePromise = loadStripe("pk_live_XKjxjBMjc0PgJpHXkDF1mxaB", {apiVersion: "2020-08-27"});
-
 class ProductDetail extends Component {
   constructor(props) {
     super(props)

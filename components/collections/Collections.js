@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { addToCart } from '../../store/actions/cartActions';
 import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
-import ProductCard from '../products/ProductCard'
+import ProductCard from './ProductCard'
 import CheckoutForm from '../../components/checkout/CheckoutForm';
 // import {commerce} from '../../lib/commerce'
 

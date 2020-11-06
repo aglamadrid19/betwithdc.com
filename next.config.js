@@ -9,5 +9,8 @@ module.exports = withSass({
     }
     return config
   },
+  env: {
+    'CHEC_PUBLIC_KEY': process.env.CHEC_PUBLIC_KEY
+  },
   target: 'serverless'
 })
