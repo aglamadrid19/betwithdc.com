@@ -17,16 +17,13 @@ import {
 } from '../../store/actions/checkoutActions';
 import { connect } from 'react-redux';
 import { withRouter } from 'next/router';
-
 import Loader from '../../components/checkout/Loader';
+import PayPalBtn from '../../components/checkout/PayPalBtn'
 
 class CheckoutPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
-      deliveryCountry: 'CA',
-      deliveryRegion: 'BC',
 
       // string property names to conveniently identify inputs related to commerce.js validation errors
       // e.g error { param: "shipping[name]"}
@@ -43,13 +40,6 @@ class CheckoutPage extends Component {
       countries: {},
       subdivisions: {},
 
-      'fulfillment[shipping_method]': '',
-      cardNumber: ccFormat('4242424242424242'),
-      expMonth: '11',
-      expYear: '22',
-      cvc: '123',
-      billingPostalZipcode: 'V6B 2V2',
-
       errors: {
         'fulfillment[shipping_method]': null,
         gateway_error: null,
@@ -60,10 +50,8 @@ class CheckoutPage extends Component {
         'shipping[postal_zip_code]': null
       },
 
-      discountCode: 'CUSTOMCOMMERCE',
-
       selectedGateway: 'paypal',
-      extr_jaZWNoy09w80JA: 7867195404,
+      extr_jaZWNoy09w80JA: '',
       loading: false,
       
     }
@@ -144,7 +132,7 @@ class CheckoutPage extends Component {
   generateToken() {
     const { cart, dispatchGenerateCheckout } = this.props;
     // const { deliveryCountry: country, deliveryRegion: region } = this.state;
-
+    // console.log(this.props)
     return dispatchGenerateCheckout(cart.id).then((checkout) => {
     })
     //   .then((checkout) => {
@@ -204,10 +192,11 @@ class CheckoutPage extends Component {
    *
    * @param {Event} e
    */
-  captureOrder(e) {
+  captureOrder(details, data) {
     e.preventDefault();
-
-    // reset error states
+    // console.log(details)
+    // console.log(data)
+    // // reset error states
     this.setState({
       errors: {
         'fulfillment[shipping_method]': null,
@@ -217,96 +206,104 @@ class CheckoutPage extends Component {
       },
       loading: true,
     });
+    console.log(data)
+    console.log(details)
 
-    // set up line_items object and inner variant object for order object below
-    const line_items = this.props.checkout.live.line_items.reduce((obj, lineItem) => {
-      const variants = lineItem.variants.reduce((obj, variant) => {
-        obj[variant.variant_id] = variant.option_id;
-        return obj;
-      }, {});
-      obj[lineItem.id] = { ...lineItem};
-      return obj;
-    }, {});
+    // // set up line_items object and inner variant object for order object below
+    // const line_items = this.props.checkout.live.line_items.reduce((obj, lineItem) => {
+    //   const variants = lineItem.variants.reduce((obj, variant) => {
+    //     obj[variant.variant_id] = variant.option_id;
+    //     return obj;
+    //   }, {});
+    //   obj[lineItem.id] = { ...lineItem};
+    //   return obj;
+    // }, {});
 
-    // construct order object
-    const newOrder = {
-      line_items,
-      customer: {
-        firstname: this.state.firstName,
-        lastname: this.state.lastName,
-        email: this.state['customer[email]']
-      },
-      // collected 'order notes' data for extra field configured in the Chec Dashboard
-      extrafields: {
-        extr_jaZWNoy09w80JA: this.state['customer[phone]'],
-      },
-      fulfillment: {
-        shipping_method: this.state['fulfillment[shipping_method]']
-      },
-      payment: {
-        gateway: 'test_gateway',
-      },
-    }
+    // // construct order object
+    // const newOrder = {
+    //   line_items,
+    //   customer: {
+    //     firstname: this.state.firstName,
+    //     lastname: this.state.lastName,
+    //     email: this.state['customer[email]']
+    //   },
+    //   // collected 'order notes' data for extra field configured in the Chec Dashboard
+    //   extrafields: {
+    //     extr_jaZWNoy09w80JA: this.state['customer[phone]'],
+    //   },
+    //   fulfillment: {
+    //     shipping_method: this.state['fulfillment[shipping_method]']
+    //   },
+    //   payment: {
+    //     gateway: 'paypal',
+    //     paypal: {
+    //       action: 'capture',
+    //       payment_id: 
+    //     }
+    //   },
+    // }
 
-    // if test gateway selected add necessary card data
-    // for the order to be completed.
-    if (this.state.selectedGateway === 'test_gateway') {
-      newOrder.payment.card = {
-        number: this.state.cardNumber,
-        expiry_month: this.state.expMonth,
-        expiry_year: this.state.expYear,
-        cvc: this.state.cvc,
-        postal_zip_code: this.state.billingPostalZipcode,
-      }
-    }
+    // // if test gateway selected add necessary card data
+    // // for the order to be completed.
+    // if (this.state.selectedGateway === 'test_gateway') {
+    //   newOrder.payment.card = {
+    //     number: this.state.cardNumber,
+    //     expiry_month: this.state.expMonth,
+    //     expiry_year: this.state.expYear,
+    //     cvc: this.state.cvc,
+    //     postal_zip_code: this.state.billingPostalZipcode,
+    //   }
+    // }
 
     // capture order
     // set order-receipt global state
     // and redirect to confirmation page
     // or handle errors
-    console.log(newOrder.line_items)
-    this.props.dispatchCaptureOrder(this.props.checkout.id, newOrder)
-      .then(() => {
-        this.props.router.push('/checkout/confirm');
-      })
-      .catch(({ data: { error = {} }}) => {
-        this.setState({ loading: false });
-        let errorToAlert = '';
-        if (error.type === 'validation') {
-          console.log('error while capturing order', error.message)
 
-          error.message.forEach(({param, error}, i) => {
-            this.setState({
-              errors: {
-                ...this.state.errors,
-                [param]: error
-              }
-            })
-          })
+    // NEXT
 
-          errorToAlert = error.message.reduce((string, error) => {
-            return `${string} ${error.error}`
-          }, '');
-        }
+    // this.props.dispatchCaptureOrder(this.props.checkout.id, newOrder)
+    //   .then((result) => {
+        
+    //   })
+    //   .catch(({ data: { error = {} }}) => {
+    //     this.setState({ loading: false });
+    //     let errorToAlert = '';
+    //     if (error.type === 'validation') {
+    //       console.log('error while capturing order', error.message)
 
-        if (error.type === 'gateway_error' || error.type === 'not_valid' || error.type === 'bad_request') {
-          this.setState({
-            errors: {
-              ...this.state.errors,
-              [(error.type === 'not_valid' ? 'fulfillment[shipping_method]' : error.type)]: error.message
-            },
-          })
-          errorToAlert = error.message
-        }
-        if (errorToAlert) {
-          alert(errorToAlert);
-        }
-      });
+    //       error.message.forEach(({param, error}, i) => {
+    //         this.setState({
+    //           errors: {
+    //             ...this.state.errors,
+    //             [param]: error
+    //           }
+    //         })
+    //       })
+
+    //       errorToAlert = error.message.reduce((string, error) => {
+    //         return `${string} ${error.error}`
+    //       }, '');
+    //     }
+
+    //     if (error.type === 'gateway_error' || error.type === 'not_valid' || error.type === 'bad_request') {
+    //       this.setState({
+    //         errors: {
+    //           ...this.state.errors,
+    //           [(error.type === 'not_valid' ? 'fulfillment[shipping_method]' : error.type)]: error.message
+    //         },
+    //       })
+    //       errorToAlert = error.message
+    //     }
+    //     if (errorToAlert) {
+    //       alert(errorToAlert);
+    //     }
+    //   });
   }
 
   render() {
     const {checkout} = this.props;
-    // console.log(`The thing is`)
+    // const payPalPrice = checkout.live.subtotal.raw
     // const selectedShippingOption = shippingOptions.find(({id}) => id === this.state['fulfillment[shipping_method]']);
 
     if (this.state.loading) {
@@ -318,7 +315,6 @@ class CheckoutPage extends Component {
         <Head>
           <title>Checkout | betatdc.com</title>
         </Head>
-
         <div className="custom-container py-5 my-4 my-sm-5">
 
           {/* Breadcrums Mobile */}
@@ -358,7 +354,7 @@ class CheckoutPage extends Component {
                 <form onChange={this.handleChangeForm}>
                   {/* ShippingDetails */}
                   <p className="font-size-subheader font-weight-semibold mb-4">
-                    Customer and Shipping Details
+                    Customer Details
                   </p>
                   <div className="mb-5">
                     <ShippingForm
@@ -366,23 +362,11 @@ class CheckoutPage extends Component {
                       lastName={this.state.lastName}
                       customerEmail={this.state['customer[email]']}
                       customerPhone={this.state['customer[phone]']}
-                    //   shippingOptions={shippingOptions}
-                    //   countries={this.state.countries}
-                    //   subdivisions={this.state.subdivisions}
-                    //   deliveryCountry={this.state.deliveryCountry}
-                    //   deliveryRegion={this.state.deliveryRegion}
-                    //   selectedShippingOptionId={this.state['fulfillment[shipping_method]']}
-                    //   selectedShippingOption={selectedShippingOption}
-                    //   shippingStreet={this.state['shipping[street]']}
-                    //   shippingStreet2={this.state.street2}
-                    //   shippingTownCity={this.state['shipping[town_city]']}
-                    //   shippingPostalZipCode={this.state['shipping[postal_zip_code]']}
-                    //   orderNotes={this.state.orderNotes}
                     />
                   </div>
 
                   {/* Payment Methods */}
-                  <PaymentDetails
+                  {/* <PaymentDetails
                     gateways={checkout.gateways}
                     onChangeGateway={this.handleGatewayChange}
                     selectedGateway={this.state.selectedGateway}
@@ -391,7 +375,7 @@ class CheckoutPage extends Component {
                     expYear={this.state.expYear}
                     cvc={this.state.cvc}
                     billingPostalZipcode={this.state.billingPostalZipcode}
-                  />
+                  /> */}
 
                   {/* Billing Address */}
                   {/* {
@@ -400,14 +384,14 @@ class CheckoutPage extends Component {
                     : ''
                   } */}
                     {/* <p className="checkout-error">{ !selectedShippingOption ? 'Select a shipping option!' : '' }</p> */}
-                    <button
+                    {/* <button
                       type="submit"
                       className="bg-black font-color-white w-100 border-none h-56 font-weight-semibold d-none d-lg-block checkout-btn"
                     //   disabled={!selectedShippingOption}
                       onClick={this.captureOrder}
                     >
-                      Make payment
-                    </button>
+                      Paypal
+                    </button> */}
                   </form>
                 )
               }
@@ -501,15 +485,16 @@ class CheckoutPage extends Component {
                     $ { checkout.live ? checkout.live.total.formatted_with_code : '' }
                   </p>
                 </div>
-
-                <button
-                  type="submit"
-                  className="bg-black mt-4 font-color-white w-100 border-none h-56 font-weight-semibold d-lg-none"
-                  onClick={this.captureOrder}
-                //   disabled={!selectedShippingOption}
+                <PayPalBtn
+                  amount = {5}
+                  currency = {'USD'}
+                  onSuccess={ (details, data) => {
+                    console.log(details)
+                    console.log(data)
+                  }}
                 >
-                  Make payment
-                </button>
+                </PayPalBtn>
+                
               </div>
             </div>
           </div>

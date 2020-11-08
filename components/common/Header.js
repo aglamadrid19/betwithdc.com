@@ -18,7 +18,8 @@ const transitionStyles = {
   entering: { height: '100vh' },
   entered: { height: '100vh' },
   exiting: { height: 0 },
-  exited: { height: 0 }
+  exited: { height: 0 },
+  position: `relative`
 };
 
 const mobileMenuLinks = [
@@ -27,12 +28,8 @@ const mobileMenuLinks = [
     link: '/'
   },
   {
-    name: 'Packages',
+    name: '1x1',
     link: '/collection'
-  },
-  {
-    name: 'About',
-    link: '/about'
   }
 ];
 
@@ -131,9 +128,11 @@ class Header extends Component {
           className={`d-flex header align-items-center justify-content-around position-relative`}
         >
           <div className="d-none d-sm-flex">
-            {/* <Link href="/collection">
-              <a style={{color: `white`}} href="/collection" className="mr-4">Packages</a>
-            </Link> */}
+            <Link href="/">
+              <a style={{color: `white`}} href="/collection" className="mr-4">
+                Home
+              </a>
+            </Link>
             <Link href="http://jquense.github.io/react-big-calendar/examples/index.html#resource">
               <a style={{color: `white`}} href="http://jquense.github.io/react-big-calendar/examples/index.html#resource" className="mr-4">
                 1x1
@@ -144,9 +143,9 @@ class Header extends Component {
             <img
               src={`/icon/${showMobileMenu ? 'cross' : 'menu'}.svg`}
               onClick={this.toggleMobileMenu}
-              className="float-left d-sm-none"
+              className="w-32 mr-1 d-block d-sm-none"
               alt="Menu icon"
-              style={{width: `3rem`, zIndex: `-1`}}
+              style={{width: `3rem`}}
             />
           </div>
           <div className="logo-container" style={{justifyContent: `center`, marginRight: `1.6em`}}>
@@ -175,13 +174,14 @@ class Header extends Component {
         <Transition in={showMobileMenu} timeout={duration}>
           {state => (
             <div
-              className="d-sm-none position-fixed top-0 left-0 right-0 overflow-hidden"
+              className="d-sm-none top-0 left-0 right-0 overflow-hidden"
               style={{
                 ...defaultStyle,
-                ...transitionStyles[state]
+                ...transitionStyles[state],
+                position: `relative`
               }}
             >
-              <div className="position-absolute top-0 left-0 right-0 h-100vh mobile-menu-inner bg-brand700 d-flex flex-column justify-content-center">
+              <div className="position-absolute top-0 left-0 right-0 h-100vh mobile-menu-inner d-flex flex-column justify-content-center" style={{backgroundColor: `white`}}>
                 {mobileMenuLinks.map((item, i) => (
                   <a
                     key={i}

@@ -66,7 +66,7 @@ class Collections extends Component {
     return (
       <div className="collection">
         {categories.map(category => (
-          <div key={category.id}>
+            <div key={category.id}>
                <p className="font-size-title font-weight-medium mb-4" id={category.slug} style={{marginRight: `-8px`,marginLeft: `-8px`}}>
                  {category.name}
                </p>
