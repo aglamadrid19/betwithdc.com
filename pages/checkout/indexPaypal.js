@@ -336,18 +336,6 @@ class CheckoutPage extends Component {
           {/* Row */}
           <div className="row mt-4">
             <div className="col-12 col-md-10 col-lg-6 offset-md-1 offset-lg-0">
-              {/* Breadcrums Desktop */}
-              {/* <div className="d-none d-sm-flex pb-4">
-                <Link href="/collection">
-                  <div className="font-size-caption text-decoration-underline cursor-pointer">
-                    Cart
-                  </div>
-                </Link>
-                <img src="/icon/arrow-right.svg" className="w-16 mx-1" alt="Arrow icon"/>
-                <div className="font-size-caption font-weight-bold cursor-pointer">
-                  Checkout
-                </div>
-              </div> */}
               {
                 checkout
                 && (
@@ -434,7 +422,7 @@ class CheckoutPage extends Component {
                     )
                   })}
                 </div>
-                <form className="row py-3 borderbottom border-color-gray400">
+                {/* <form className="row py-3 borderbottom border-color-gray400">
                   <input
                     name="discountCode"
                     onChange={this.handleFormChanges}
@@ -449,7 +437,7 @@ class CheckoutPage extends Component {
                   >
                     Apply
                   </button>
-                </form>
+                </form> */}
                 <div className="py-3 borderbottom border-color-black">
                   {[
                     {

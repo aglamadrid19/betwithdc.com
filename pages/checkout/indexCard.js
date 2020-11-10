@@ -17,7 +17,6 @@ import {
 } from '../../store/actions/checkoutActions';
 import { connect } from 'react-redux';
 import { withRouter } from 'next/router';
-
 import Loader from '../../components/checkout/Loader';
 
 class CheckoutPage extends Component {
@@ -88,50 +87,6 @@ class CheckoutPage extends Component {
     this.generateToken();
     // this.getRegions(this.state.deliveryCountry)
   }
-
-//   componentDidUpdate(prevProps, prevState) {
-//     // if cart items have changed then regenerate checkout token object to reflect changes.
-//     if (prevProps.cart && prevProps.cart.total_items !== this.props.cart.total_items && !this.props.orderReceipt) {
-//       // reset selected shipping option
-//     //   this.setState({
-//     //     'fulfillment[shipping_method]': '',
-//     //   })
-//       // regenerate checkout token object since cart has been updated
-//         this.generateToken();
-//     }
-
-    // const hasDeliveryCountryChanged = prevState.deliveryCountry !== this.state.deliveryCountry;
-    // const hasDeliveryRegionChanged = prevState.deliveryRegion !== this.state.deliveryRegion;
-
-    // // refresh list of regions when delivery country has changed
-    // if (hasDeliveryCountryChanged) {
-    //   this.getRegions(this.state.deliveryCountry);
-    // }
-
-    // // if delivery country or region have changed, and we still have a checkout token object, then refresh the token,
-    // // and reset the previously selected shipping method
-    // if (hasDeliveryCountryChanged || hasDeliveryRegionChanged && this.props.checkout) {
-    //   // reset selected shipping option since previous checkout token live object shipping info
-    //   // was set based off delivery country, deliveryRegion
-    //   this.setState({
-    //     'fulfillment[shipping_method]': '',
-    //   })
-    //   this.generateToken();
-    // }
-
-    // // if selected shippiing option changes, regenerate checkout token object to reflect changes
-    // if (
-    //   prevState['fulfillment[shipping_method]'] !== this.state['fulfillment[shipping_method]']
-    //   && this.state['fulfillment[shipping_method]'] && this.props.checkout
-    // ) {
-    //   // update checkout token object with shipping information
-    //   this.props.dispatchSetShippingOptionsInCheckout(
-    //     this.props.checkout.id,
-    //     this.state['fulfillment[shipping_method]'],
-    //     this.state.deliveryCountry,
-    //     this.state.deliveryRegion
-    //   );
-    // }
 
   handleGatewayChange(selectedGateway) {
     this.setState({
@@ -207,6 +162,7 @@ class CheckoutPage extends Component {
   captureOrder(e) {
     e.preventDefault();
 
+    // Validate form 
     // reset error states
     this.setState({
       errors: {
@@ -244,21 +200,21 @@ class CheckoutPage extends Component {
         shipping_method: this.state['fulfillment[shipping_method]']
       },
       payment: {
-        gateway: 'test_gateway',
+        gateway: 'stripe',
       },
     }
 
     // if test gateway selected add necessary card data
     // for the order to be completed.
-    if (this.state.selectedGateway === 'test_gateway') {
-      newOrder.payment.card = {
-        number: this.state.cardNumber,
-        expiry_month: this.state.expMonth,
-        expiry_year: this.state.expYear,
-        cvc: this.state.cvc,
-        postal_zip_code: this.state.billingPostalZipcode,
-      }
-    }
+    // if (this.state.selectedGateway === 'test_gateway') {
+    //   newOrder.payment.card = {
+    //     number: this.state.cardNumber,
+    //     expiry_month: this.state.expMonth,
+    //     expiry_year: this.state.expYear,
+    //     cvc: this.state.cvc,
+    //     postal_zip_code: this.state.billingPostalZipcode,
+    //   }
+    // }
 
     // capture order
     // set order-receipt global state
@@ -317,7 +273,7 @@ class CheckoutPage extends Component {
         <Head>
           <title>Checkout | betatdc.com</title>
         </Head>
-
+        
         <div className="custom-container py-5 my-4 my-sm-5">
 
           {/* Breadcrums Mobile */}
@@ -379,7 +335,7 @@ class CheckoutPage extends Component {
                     //   orderNotes={this.state.orderNotes}
                     />
                   </div>
-
+                  
                   {/* Payment Methods */}
                   <PaymentDetails
                     gateways={checkout.gateways}
@@ -411,6 +367,8 @@ class CheckoutPage extends Component {
                 )
               }
             </div>
+
+            
 
             <div className="col-12 col-lg-5 col-md-10 offset-md-1">
               <div className="bg-brand200 p-5 checkout-summary">
@@ -449,11 +407,11 @@ class CheckoutPage extends Component {
                     )
                   })}
                 </div>
-                <form className="row py-3 borderbottom border-color-gray400">
+                {/* <form className="row py-3 borderbottom border-color-gray400">
                   <input
                     name="discountCode"
                     onChange={this.handleFormChanges}
-                    value={this.state.discountCode}
+                    placeholder={this.state.discountCode}
                     placeholder="Gift card or discount code"
                     className="mr-2 col"
                   />
@@ -464,7 +422,7 @@ class CheckoutPage extends Component {
                   >
                     Apply
                   </button>
-                </form>
+                </form> */}
                 <div className="py-3 borderbottom border-color-black">
                   {[
                     {

@@ -48,7 +48,7 @@ export default class ShippingForm extends Component {
               <p className="mb-1 font-size-caption font-color-light">
                 First Name*
               </p>
-              <input name="firstName" value={firstName} className="rounded-0 w-100" />
+              <input name="firstName" placeholder={firstName} className="rounded-0 w-100" />
             </label>
           </div>
           <div className="col-12 col-sm-4 mb-3">
@@ -64,7 +64,7 @@ export default class ShippingForm extends Component {
               <p className="mb-1 font-size-caption font-color-light">
                 Last Name*
               </p>
-              <input name="lastName" value={lastName} className="rounded-0 w-100" />
+              <input name="lastName" placeholder={lastName} className="rounded-0 w-100" />
             </label>
           </div>
         </div>
@@ -164,7 +164,7 @@ export default class ShippingForm extends Component {
               <p className="mb-1 font-size-caption font-color-light">
                 Telephone*
               </p>
-              <input name="customer[phone]" value={customerPhone} className="rounded-0 w-100" />
+              <input name="customer[phone]" placeholder={customerPhone} className="rounded-0 w-100" />
             </label>
           </div>
           <div className="col-12 col-sm-6 mb-3">
@@ -174,7 +174,7 @@ export default class ShippingForm extends Component {
               </p>
               <input
                 name="customer[email]"
-                value={customerEmail}
+                placeholder={customerEmail}
                 className="rounded-0 w-100"
               />
             </label>

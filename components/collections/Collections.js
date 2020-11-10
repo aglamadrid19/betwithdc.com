@@ -6,7 +6,7 @@ import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
 import ProductCard from './ProductCard'
 import CheckoutForm from '../../components/checkout/CheckoutForm';
-// import {commerce} from '../../lib/commerce'
+import {commerce} from '../../lib/commerce'
 
 class Collections extends Component {
   constructor(props) {
@@ -25,7 +25,7 @@ class Collections extends Component {
   }
 
   componentDidMount() {
-    // this.fetchProducts();
+    this.fetchProducts();
     // this.fetchCart();
   }
 
@@ -35,7 +35,7 @@ class Collections extends Component {
   filterProductsByCat(catSlug) {
     const { categories, products } = this.props;
 
-    const cat = categories.find(category => category.slug === catSlug);
+    const cat = categories.find(catUFC => catUFC.slug === catSlug);
     if (!cat) {
       return [];
     }
@@ -46,13 +46,13 @@ class Collections extends Component {
  * Fetch products data from Chec and stores in the products data object.
  * https://commercejs.com/docs/sdk/products
  */
-  // fetchProducts() {
-  //   commerce.products.list().then((products) => {
-  //     this.setState({ products: products.data });
-  //   }).catch((error) => {
-  //     console.log('There was an error fetching the products', error);
-  //   });
-  // }
+  fetchProducts() {
+    commerce.products.list().then((products) => {
+      this.setState({ products: products.data });
+    }).catch((error) => {
+      console.log('There was an error fetching the products', error);
+    });
+  }
 
   /**
   * Render collections based on categories available in data
@@ -61,23 +61,26 @@ class Collections extends Component {
     const { categories } = this.props;
     const { products } = this.props;
     const reg = /(<([^>]+)>)/ig;
-    // console.log(products)
+    // LEAGUE ACTIVE
+    const catUFC = categories.filter(result => {
+      return result.name === 'UFC'
+    })
+    
+    console.log(catUFC)
 
     return (
-      <div className="collection">
-        {categories.map(category => (
-            <div key={category.id}>
-               <p className="font-size-title font-weight-medium mb-4" id={category.slug} style={{marginRight: `-8px`,marginLeft: `-8px`}}>
-                 {category.name}
-               </p>
-              <div className="row" style={{marginBottom: `3em`}}>
-                {this.filterProductsByCat(category.slug).map(product => (
-                  <div key={product.id} className="col-sm" style={{marginBottom: `1.5em`}}>
-                    <ProductCard key={product.id} props={this.props} product={product}></ProductCard>
-                  </div>))}
-              </div>
-            </div>
-        ))}
+      <div className="collection">  
+        <div key={catUFC.id}>
+            <p className="font-size-title font-weight-medium mb-4" id={catUFC[0].slug} style={{marginRight: `-8px`,marginLeft: `-8px`}}>
+              {catUFC.name}
+            </p>
+          <div className="row" style={{marginBottom: `3em`}}>
+            {this.filterProductsByCat(catUFC[0].slug).map(product => (
+              <div key={product.id} className="col-sm" style={{marginBottom: `1.5em`}}>
+                <ProductCard key={product.id} props={this.props} product={product}></ProductCard>
+              </div>))}
+          </div>
+        </div>
       </div>
     )
   }

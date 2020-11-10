@@ -62,12 +62,12 @@ export default class HeroSection extends React.Component {
                   Check our best sellers
                 </p>
                 <div className="d-flex">
-                  <Link href="/collection">
+                  {/* <Link href="/collection">
                     <a className="d-flex py-3 align-items-center font-color-black borderbottom border-color-black">
                       <p className="mr-3">Explore products</p>
                       <img src="/icon/arrow-long-right.svg" />
                     </a>
-                  </Link>
+                  </Link> */}
                 </div>
               </div>
               <div className="col-md-6">

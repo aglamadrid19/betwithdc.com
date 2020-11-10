@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 const handlePaymentMethodReceived = async (event) => {
   // Send the payment details to our function.
+  console.log(event)
   const paymentDetails = {
       payment_method: event.paymentMethod.id,
       amount: event.paymentMethod

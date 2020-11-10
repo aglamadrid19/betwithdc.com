@@ -7,7 +7,7 @@ import CheckoutForm from '../checkout/CheckoutForm';
 import {commerce} from '../../lib/commerce'
 import { addToCart } from '../../store/actions/cartActions';
 
-const stripePromise = loadStripe("pk_live_515pPezEikLqFqYPgsIUyv7IJvB9FolbpzIQgxmhPpWZr0PcFOsYMidIWRz2f7sPZZfr0MylkwyrAmHBTD4OkMisn00VB6X1vUH");
+const stripePromise = loadStripe('pk_live_515pPezEikLqFqYPgsIUyv7IJvB9FolbpzIQgxmhPpWZr0PcFOsYMidIWRz2f7sPZZfr0MylkwyrAmHBTD4OkMisn00VB6X1vUH');
 
 class ProductCard extends Component {
   constructor(props) {
@@ -48,33 +48,33 @@ class ProductCard extends Component {
         </p>
         <div>
           <Elements stripe={stripePromise}>
-             <CheckoutForm label={product.name} price={product.price.raw}/>
+             <CheckoutForm label={product.name.replace(reg, '')} price={product.price.raw}/>
            </Elements>
         </div>
 
       <div className="d-flex justify-content-around">
         <div className="text-center btn-group btn-group-lg" role="group" style={{width: `100%`}} aria-label="Basic example">
           <Link href="/checkout/indexCard">
-            <button type="button" className="h-56 btn btn-dark font-color-white" onClick={this.handleAddToCart}>
+            <button type="button" className="border h-56 btn btn-dark font-color-white" onClick={this.handleAddToCart}>
               <span className="">
                 <i className="fa fa-credit-card fa-lg fa-fw" aria-hidden="true"></i>
               </span>
             </button>
           </Link>
           <Link href="/checkout/indexPaypal">
-            <button type="button" className="h-56 btn btn-dark font-color-white" onClick={this.handleAddToCart}>
+            <button type="button" className="border h-56 btn btn-dark font-color-white" onClick={this.handleAddToCart}>
               <span className="">
                 <i className="fa fa-paypal fa-lg fa-fw" aria-hidden="true"></i>
               </span>
             </button>
           </Link>
-          <Link href="/checkout">
+          {/* <Link href="/checkout">
             <button type="button" className="h-56 btn btn-dark font-color-white" onClick={this.handleAddToCart}>
               <span className="">
                 <i className="fa fa-btc fa-lg fa-fw" aria-hidden="true"></i>
               </span>
             </button>
-          </Link>
+          </Link> */}
         </div>
       </div>
     </div>
