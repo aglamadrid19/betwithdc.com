@@ -71,7 +71,7 @@ export default class HeroSection extends React.Component {
                 </div>
               </div>
               <div className="col-md-6">
-                <img src="/images/betwithdc - hero image 1.jpg" className="img-fluid rounded" width="600px" style={{objectFit: "cover", height: `55vh`}}></img>
+                <img src="/images/betwithdc - hero image 1.jpg" className="img-fluid rounded" width="600px" style={{objectFit: "cover", height: `75vh`}}></img>
               </div>
             </div>
             </div>
