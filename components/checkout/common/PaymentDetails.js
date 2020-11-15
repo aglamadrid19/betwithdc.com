@@ -2,10 +2,40 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Radiobox from '../../common/atoms/Radiobox';
 import {loadStripe} from '@stripe/stripe-js';
-import {Elements} from '@stripe/react-stripe-js';
-import {CardElement} from '@stripe/react-stripe-js';
+import {CardElement, Elements, ElementsConsumer} from '@stripe/react-stripe-js';
 
-const stripePromise = loadStripe('pk_live_515pPezEikLqFqYPgsIUyv7IJvB9FolbpzIQgxmhPpWZr0PcFOsYMidIWRz2f7sPZZfr0MylkwyrAmHBTD4OkMisn00VB6X1vUH');
+const stripePromise = loadStripe('pk_test_BSgKzgluNhwx78Yk9kva8VXz');
+
+class CheckoutForm extends React.Component {
+  handleSubmit = async (event) => {
+    event.preventDefault();
+    const {stripe, elements} = this.props;
+    const {error, paymentMethod} = await stripe.createPaymentMethod({
+      type: 'card',
+      card: elements.getElement(CardElement),
+    });
+  };
+
+  render() {
+    const {stripe} = this.props;
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <CardElement />
+        <button type="submit" disabled={!stripe}>
+          Pay
+        </button>
+      </form>
+    );
+  }
+}
+
+const InjectedCheckoutForm = () => (
+  <ElementsConsumer>
+    {({stripe, elements}) => (
+      <CheckoutForm stripe={stripe} elements={elements} />
+    )}
+  </ElementsConsumer>
+);
 
 export default class PaymentDetails extends Component {
   constructor(props) {
@@ -22,7 +52,7 @@ export default class PaymentDetails extends Component {
       cvc,
       billingPostalZipcode,
     } = this.props;
-    
+
     return (
       <>
         <p className="font-size-subheader font-weight-semibold mb-3">
@@ -42,81 +72,15 @@ export default class PaymentDetails extends Component {
               </label>
 
               <div className="pl-5 pr-3 pb-3 ml-2">
-                <div class="form-group">
-                  <label for="card-element">Card Number</label>
-                  <div id="card-element" class="form-control" style={{height: `2.4em`, paddingTop: `0.7em`}}>
-                  
-                  </div>
-                </div>
-                {/* <Elements stripe={stripePromise}>
-                <CardElement 
-                  options={{
-                    iconStyle: 'solid',
-                }}
-                  className="rounded-0 w-100"
-                >
-
-                </CardElement>
-                </Elements> */}
-                  {/* <div className="col-sm-8">
-                    <label className="w-100 mb-3 mt-2 mb-sm-0">
-                      <p className="mb-1 font-size-caption font-color-light">
-                        Card Number
-                      </p>
-                      <input
-                        name="cardNumber"
-                        pattern="[0-9.]+"
-                        placeholder={cardNumber}
-                        maxLength="16"
-                        className="rounded-0 w-100"
-                      />
-                    </label>
-                  </div>
-                  <div className="col-sm-3">
-                    <label className="w-100 mb-3 mt-2 mb-sm-0">
-                      <p className="mb-1 font-size-caption font-color-light">
-                        CVC (CVV)
-                      </p>
-                      <input
-                        name="cvc"
-                        placeholder={cvc}
-                        maxLength="3"
-                        type="number"
-                        className="rounded-0 w-100"
-                      />
-                    </label>
-                  </div>
-                  <div className="col-sm-3">
-                    <label className="w-100 mb-3 mt-2 mb-sm-0">
-                      <p className="mb-1 font-size-caption font-color-light">
-                        Exp. Month
-                      </p>
-                      <input
-                        name="expMonth"
-                        type="number"
-                        className="rounded-0 w-100"
-                        placeholder="MM"
-                      />
-                    </label>
-                  </div>
-                  <div className="col-sm-3">
-                    <label className="w-100 mb-3 mt-2 mb-sm-0">
-                      <p className="mb-1 font-size-caption font-color-light">
-                        Exp. Year
-                      </p>
-                      <input
-                        type="number"
-                        name="expYear"
-                        className="rounded-0 w-100"
-                        placeholder="YY"
-                      />
-                    </label>
-                  </div> */}
+              <Elements stripe={stripePromise}>
+                <InjectedCheckoutForm />
+              </Elements>
               </div>
             </div>)
             : ''
           }
         </div>
+        
       </>
     );
   }
