@@ -1,41 +1,42 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Radiobox from '../../common/atoms/Radiobox';
+import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
-import {CardElement, Elements, ElementsConsumer} from '@stripe/react-stripe-js';
+import CheckoutForm from './CheckoutForm'
 
-const stripePromise = loadStripe('pk_test_BSgKzgluNhwx78Yk9kva8VXz');
+const stripePromise = loadStripe('pk_live_515pPezEikLqFqYPgsIUyv7IJvB9FolbpzIQgxmhPpWZr0PcFOsYMidIWRz2f7sPZZfr0MylkwyrAmHBTD4OkMisn00VB6X1vUH');
 
-class CheckoutForm extends React.Component {
-  handleSubmit = async (event) => {
-    event.preventDefault();
-    const {stripe, elements} = this.props;
-    const {error, paymentMethod} = await stripe.createPaymentMethod({
-      type: 'card',
-      card: elements.getElement(CardElement),
-    });
-  };
+// class CheckoutForm extends React.Component {
+//   handleSubmit = async (event) => {
+//     event.preventDefault();
+//     const {stripe, elements} = this.props;
+//     const {error, paymentMethod} = await stripe.createPaymentMethod({
+//       type: 'card',
+//       card: elements.getElement(CardElement),
+//     });
+//   };
 
-  render() {
-    const {stripe} = this.props;
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <CardElement />
-        <button type="submit" disabled={!stripe}>
-          Pay
-        </button>
-      </form>
-    );
-  }
-}
+//   render() {
+//     const {stripe} = this.props;
+//     return (
+//       <form onSubmit={this.handleSubmit}>
+//         <CardElement />
+//         <button type="submit" disabled={!stripe}>
+//           Pay
+//         </button>
+//       </form>
+//     );
+//   }
+// }
 
-const InjectedCheckoutForm = () => (
-  <ElementsConsumer>
-    {({stripe, elements}) => (
-      <CheckoutForm stripe={stripe} elements={elements} />
-    )}
-  </ElementsConsumer>
-);
+// const InjectedCheckoutForm = () => (
+//   <ElementsConsumer>
+//     {({stripe, elements}) => (
+//       <CheckoutForm stripe={stripe} elements={elements} />
+//     )}
+//   </ElementsConsumer>
+// );
 
 export default class PaymentDetails extends Component {
   constructor(props) {
@@ -72,9 +73,9 @@ export default class PaymentDetails extends Component {
               </label>
 
               <div className="pl-5 pr-3 pb-3 ml-2">
-              <Elements stripe={stripePromise}>
-                <InjectedCheckoutForm />
-              </Elements>
+                  <Elements stripe={stripePromise}>
+                    <CheckoutForm />
+                  </Elements>
               </div>
             </div>)
             : ''
