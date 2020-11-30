@@ -273,15 +273,97 @@ class CheckoutPage extends Component {
         <Head>
           <title>Checkout | betatdc.com</title>
         </Head>
-        
         <div className="custom-container py-5 my-4 my-sm-5">
+        <div className="row mt-4">
+        <div className="col-12 col-lg-6 col-md-10 offset-md-1 offset-lg-0">
+              <div className="bg-brand200 p-5 checkout-summary">
+                <div className="borderbottom font-size-subheader border-color-gray400 pb-2 font-weight-medium">
+                  Your order
+                </div>
+                <div className="pt-3 borderbottom border-color-gray400">
+                  {(checkout.live ? checkout.live.line_items : []).map((item, index, items) => {
+                    return (
+                      <div
+                        key={item.id}
+                        className="d-flex mb-2"
+                      >
+                        { (item && item.media)
+                          && (<img className="checkout__line-item-image mr-2" src={item.media.source} alt={item.product_name}/>)
+                        }
+                        <div className="d-flex flex-grow-1">
+                          <div className="flex-grow-1">
+                            <p className="font-weight-medium">
+                              {item.product_name}
+                            </p>
+                            <p className="font-color-light">Quantity: {item.quantity}</p>
+                            <div className="d-flex justify-content-between mb-2">
+                              {item.variants.map((variant) =>
+                                <p key={variant.variant_id} className="font-color-light font-weight-small">
+                                  {variant.variant_name}: {variant.option_name}
+                                </p>
+                              )}
+                            </div>
+                          </div>
+                          <div className="text-right font-weight-semibold">
+                            ${item.line_total.formatted_with_code}
+                          </div>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+                
+                <div className="py-3 borderbottom border-color-black">
+                  {[
+                    {
+                      name: 'Subtotal',
+                      amount: checkout.live ? checkout.live.subtotal.formatted_with_symbol : '',
+                    },
+                    {
+                      name: 'Tax',
+                      amount: checkout.live ? checkout.live.tax.amount.formatted_with_symbol : '',
+                    },
+                    // {
+                    //   name: 'Shipping',
+                    //   amount: selectedShippingOption ? `${selectedShippingOption.description} - ${selectedShippingOption.price.formatted_with_symbol}` : 'No shipping method selected',
+                    // },
+                    {
+                      name: 'Discount',
+                      amount: (checkout.live && checkout.live.discount && checkout.live.discount.code) ? `Saved ${checkout.live.discount.amount_saved.formatted_with_symbol}` : 'No discount code applied',
+                    }
+                  ].map((item, i) => (
+                    <div key={i} className="d-flex justify-content-between align-items-center mb-2">
+                      <p>{item.name}</p>
+                      <p className="text-right font-weight-medium">
+                        {item.amount}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+                <div className="d-flex justify-content-between align-items-center mb-2 pt-3">
+                  <p className="font-size-title font-weight-semibold">
+                    Total amount
+                  </p>
+                  <p className="text-right font-weight-semibold font-size-title">
+                    $ { checkout.live ? checkout.live.total.formatted_with_code : '' }
+                  </p>
+                </div>
 
+                {/* <button
+                  type="submit"
+                  className="bg-black mt-4 font-color-white w-100 border-none h-56 font-weight-semibold d-lg-none"
+                  onClick={this.captureOrder}
+                //   disabled={!selectedShippingOption}
+                >
+                  Make payment
+                </button> */}
+              </div>
+            </div>
           {/* Row */}
-          <div className="row mt-4">
             <div className="col-12 col-md-10 col-lg-6 offset-md-1 offset-lg-0">
               {
                 checkout
-                && (
+                && (  
                 <form onChange={this.handleChangeForm}>
                   {/* ShippingDetails */}
                   <p className="font-size-subheader font-weight-semibold mb-4">
@@ -327,119 +409,17 @@ class CheckoutPage extends Component {
                     : ''
                   } */}
                     {/* <p className="checkout-error">{ !selectedShippingOption ? 'Select a shipping option!' : '' }</p> */}
-                    <button
+                    {/* <button
                       type="submit"
                       className="bg-black font-color-white w-100 border-none h-56 font-weight-semibold d-none d-lg-block checkout-btn"
                     //   disabled={!selectedShippingOption}
                       onClick={this.captureOrder}
                     >
                       Make payment
-                    </button>
+                    </button> */}
                   </form>
                 )
               }
-            </div>
-
-            
-
-            <div className="col-12 col-lg-5 col-md-10 offset-md-1">
-              <div className="bg-brand200 p-5 checkout-summary">
-                <div className="borderbottom font-size-subheader border-color-gray400 pb-2 font-weight-medium">
-                  Your order
-                </div>
-                <div className="pt-3 borderbottom border-color-gray400">
-                  {(checkout.live ? checkout.live.line_items : []).map((item, index, items) => {
-                    return (
-                      <div
-                        key={item.id}
-                        className="d-flex mb-2"
-                      >
-                        { (item && item.media)
-                          && (<img className="checkout__line-item-image mr-2" src={item.media.source} alt={item.product_name}/>)
-                        }
-                        <div className="d-flex flex-grow-1">
-                          <div className="flex-grow-1">
-                            <p className="font-weight-medium">
-                              {item.product_name}
-                            </p>
-                            <p className="font-color-light">Quantity: {item.quantity}</p>
-                            <div className="d-flex justify-content-between mb-2">
-                              {item.variants.map((variant) =>
-                                <p key={variant.variant_id} className="font-color-light font-weight-small">
-                                  {variant.variant_name}: {variant.option_name}
-                                </p>
-                              )}
-                            </div>
-                          </div>
-                          <div className="text-right font-weight-semibold">
-                            ${item.line_total.formatted_with_code}
-                          </div>
-                        </div>
-                      </div>
-                    )
-                  })}
-                </div>
-                {/* <form className="row py-3 borderbottom border-color-gray400">
-                  <input
-                    name="discountCode"
-                    onChange={this.handleFormChanges}
-                    placeholder={this.state.discountCode}
-                    placeholder="Gift card or discount code"
-                    className="mr-2 col"
-                  />
-                  <button
-                    className="font-color-white border-none font-weight-medium px-4 col-auto"
-                    disabled={!this.props.checkout || undefined}
-                    onClick={this.handleDiscountChange}
-                  >
-                    Apply
-                  </button>
-                </form> */}
-                <div className="py-3 borderbottom border-color-black">
-                  {[
-                    {
-                      name: 'Subtotal',
-                      amount: checkout.live ? checkout.live.subtotal.formatted_with_symbol : '',
-                    },
-                    {
-                      name: 'Tax',
-                      amount: checkout.live ? checkout.live.tax.amount.formatted_with_symbol : '',
-                    },
-                    // {
-                    //   name: 'Shipping',
-                    //   amount: selectedShippingOption ? `${selectedShippingOption.description} - ${selectedShippingOption.price.formatted_with_symbol}` : 'No shipping method selected',
-                    // },
-                    {
-                      name: 'Discount',
-                      amount: (checkout.live && checkout.live.discount && checkout.live.discount.code) ? `Saved ${checkout.live.discount.amount_saved.formatted_with_symbol}` : 'No discount code applied',
-                    }
-                  ].map((item, i) => (
-                    <div key={i} className="d-flex justify-content-between align-items-center mb-2">
-                      <p>{item.name}</p>
-                      <p className="text-right font-weight-medium">
-                        {item.amount}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-                <div className="d-flex justify-content-between align-items-center mb-2 pt-3">
-                  <p className="font-size-title font-weight-semibold">
-                    Total amount
-                  </p>
-                  <p className="text-right font-weight-semibold font-size-title">
-                    $ { checkout.live ? checkout.live.total.formatted_with_code : '' }
-                  </p>
-                </div>
-
-                <button
-                  type="submit"
-                  className="bg-black mt-4 font-color-white w-100 border-none h-56 font-weight-semibold d-lg-none"
-                  onClick={this.captureOrder}
-                //   disabled={!selectedShippingOption}
-                >
-                  Make payment
-                </button>
-              </div>
             </div>
           </div>
         </div>

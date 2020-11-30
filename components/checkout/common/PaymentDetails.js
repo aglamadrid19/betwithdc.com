@@ -59,9 +59,9 @@ export default class PaymentDetails extends Component {
         <p className="font-size-subheader font-weight-semibold mb-3">
           Payment Detail
         </p>
-        <div className="border border-color-gray400 mb-5">
+
           {(gateways) ?
-            (<div className="borderbottom border-color-gray500">
+            (<div>
               <label
                 className={'p-3 d-flex align-items-center cursor-pointer'}
               >
@@ -72,7 +72,7 @@ export default class PaymentDetails extends Component {
                 <p className="font-weight-medium">Credit/debit card</p>
               </label>
 
-              <div className="pl-5 pr-3 pb-3 ml-2">
+              <div className="">
                   <Elements stripe={stripePromise}>
                     <CheckoutForm />
                   </Elements>
@@ -80,7 +80,6 @@ export default class PaymentDetails extends Component {
             </div>)
             : ''
           }
-        </div>
         
       </>
     );
