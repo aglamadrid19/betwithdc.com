@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
-import Link from 'next/link';
 import ccFormat from '../../utils/ccFormat';
 import {commerce} from '../../lib/commerce';
 import Root from '../../components/common/Root';
-import ShippingForm from '../../components/checkout/common/ShippingForm';
 import PaymentDetails from '../../components/checkout/common/PaymentDetails';
 import BillingDetails from '../../components/checkout/common/BillingDetails';
 import {
   generateCheckoutTokenFromCart as dispatchGenerateCheckout,
-//   getShippingOptionsForCheckout as dispatchGetShippingOptions,
   setShippingOptionInCheckout as dispatchSetShippingOptionsInCheckout,
   setDiscountCodeInCheckout as dispatchSetDiscountCodeInCheckout,
   captureOrder as dispatchCaptureOrder,
@@ -18,6 +15,7 @@ import {
 import { connect } from 'react-redux';
 import { withRouter } from 'next/router';
 import Loader from '../../components/checkout/Loader';
+import Footer from '../../components/common/Footer';
 
 class CheckoutPage extends Component {
   constructor(props) {
@@ -69,9 +67,6 @@ class CheckoutPage extends Component {
 
     this.captureOrder = this.captureOrder.bind(this);
     this.generateToken = this.generateToken.bind(this);
-    // this.getAllCountries = this.getAllCountries.bind(this);
-    // this.getRegions = this.getRegions.bind(this);
-    this.handleChangeForm = this.handleChangeForm.bind(this);
     this.handleDiscountChange = this.handleDiscountChange.bind(this);
     this.handleGatewayChange = this.handleGatewayChange.bind(this);
     this.redirectOutOfCheckout = this.redirectOutOfCheckout.bind(this);
@@ -102,26 +97,11 @@ class CheckoutPage extends Component {
 
     return dispatchGenerateCheckout(cart.id).then((checkout) => {
     })
-    //   .then((checkout) => {
-    //     // continue and dispatch getShippingOptionsForCheckout to get shipping options based on checkout.id
-    //     // this.getAllCountries(checkout);
-    //     // console.log(checkout)
-    //     return dispatchGetShippingOptions(checkout.id)
-    //   })
-    //   .catch(error => {
-    //     console.log('error caught in checkout/index.js in generateToken', error);
-    //   })
   }
 
   redirectOutOfCheckout() {
     this.props.router.push('/');
   }
-
-//   handleGatewayChange(selectedGateway) {
-//     this.setState({
-//       selectedGateway,
-//     });
-//   }
 
   handleDiscountChange(e) {
     e.preventDefault();
@@ -141,17 +121,6 @@ class CheckoutPage extends Component {
       .catch(error => {
         alert('Sorry, the discount code could not be applied');
       });
-  }
-
-  handleChangeForm(e) {
-    // when input cardNumber changes format using ccFormat helper
-    if (e.target.name === 'cardNumber') {
-      e.target.value = ccFormat(e.target.value)
-    }
-    // update form's input by name in state
-    this.setState({
-      [e.target.name]: e.target.value,
-    });
   }
 
   /**
@@ -192,7 +161,6 @@ class CheckoutPage extends Component {
         lastname: this.state.lastName,
         email: this.state['customer[email]']
       },
-      // collected 'order notes' data for extra field configured in the Chec Dashboard
       extrafields: {
         extr_jaZWNoy09w80JA: this.state['customer[phone]'],
       },
@@ -204,22 +172,6 @@ class CheckoutPage extends Component {
       },
     }
 
-    // if test gateway selected add necessary card data
-    // for the order to be completed.
-    // if (this.state.selectedGateway === 'test_gateway') {
-    //   newOrder.payment.card = {
-    //     number: this.state.cardNumber,
-    //     expiry_month: this.state.expMonth,
-    //     expiry_year: this.state.expYear,
-    //     cvc: this.state.cvc,
-    //     postal_zip_code: this.state.billingPostalZipcode,
-    //   }
-    // }
-
-    // capture order
-    // set order-receipt global state
-    // and redirect to confirmation page
-    // or handle errors
     this.props.dispatchCaptureOrder(this.props.checkout.id, newOrder)
       .then(() => {
         this.props.router.push('/checkout/confirm');
@@ -264,18 +216,15 @@ class CheckoutPage extends Component {
     // console.log(`The thing is`)
     // const selectedShippingOption = shippingOptions.find(({id}) => id === this.state['fulfillment[shipping_method]']);
 
-    if (this.state.loading) {
-      return <Loader />;
-    }
-
     return (
       <Root>
         <Head>
           <title>Checkout | betatdc.com</title>
+          <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
         </Head>
-        <div className="custom-container py-5 my-4 my-sm-5">
-        <div className="row mt-4">
-        <div className="col-12 col-lg-6 col-md-10 offset-md-1 offset-lg-0">
+        <div className="custom-container mt-5">
+          <div className="row mt-5">
+          <div className="col-12 col-lg-6 col-md-10 offset-md-1 offset-lg-0">
               <div className="bg-brand200 p-5 checkout-summary">
                 <div className="borderbottom font-size-subheader border-color-gray400 pb-2 font-weight-medium">
                   Your order
@@ -323,10 +272,6 @@ class CheckoutPage extends Component {
                       name: 'Tax',
                       amount: checkout.live ? checkout.live.tax.amount.formatted_with_symbol : '',
                     },
-                    // {
-                    //   name: 'Shipping',
-                    //   amount: selectedShippingOption ? `${selectedShippingOption.description} - ${selectedShippingOption.price.formatted_with_symbol}` : 'No shipping method selected',
-                    // },
                     {
                       name: 'Discount',
                       amount: (checkout.live && checkout.live.discount && checkout.live.discount.code) ? `Saved ${checkout.live.discount.amount_saved.formatted_with_symbol}` : 'No discount code applied',
@@ -348,81 +293,18 @@ class CheckoutPage extends Component {
                     $ { checkout.live ? checkout.live.total.formatted_with_code : '' }
                   </p>
                 </div>
-
-                {/* <button
-                  type="submit"
-                  className="bg-black mt-4 font-color-white w-100 border-none h-56 font-weight-semibold d-lg-none"
-                  onClick={this.captureOrder}
-                //   disabled={!selectedShippingOption}
-                >
-                  Make payment
-                </button> */}
               </div>
             </div>
           {/* Row */}
-            <div className="col-12 col-md-10 col-lg-6 offset-md-1 offset-lg-0">
-              {
-                checkout
-                && (  
-                <form onChange={this.handleChangeForm}>
-                  {/* ShippingDetails */}
-                  <p className="font-size-subheader font-weight-semibold mb-4">
-                    Customer and Shipping Details
-                  </p>
-                  <div className="mb-5">
-                    <ShippingForm
-                      firstName={this.state.firstName}
-                      lastName={this.state.lastName}
-                      customerEmail={this.state['customer[email]']}
-                      customerPhone={this.state['customer[phone]']}
-                    //   shippingOptions={shippingOptions}
-                    //   countries={this.state.countries}
-                    //   subdivisions={this.state.subdivisions}
-                    //   deliveryCountry={this.state.deliveryCountry}
-                    //   deliveryRegion={this.state.deliveryRegion}
-                    //   selectedShippingOptionId={this.state['fulfillment[shipping_method]']}
-                    //   selectedShippingOption={selectedShippingOption}
-                    //   shippingStreet={this.state['shipping[street]']}
-                    //   shippingStreet2={this.state.street2}
-                    //   shippingTownCity={this.state['shipping[town_city]']}
-                    //   shippingPostalZipCode={this.state['shipping[postal_zip_code]']}
-                    //   orderNotes={this.state.orderNotes}
-                    />
-                  </div>
-                  
+            <div className="col-12 col-md-10 col-lg-6 offset-md-1 offset-lg-0 mt-5">
                   {/* Payment Methods */}
                   <PaymentDetails
-                    gateways={checkout.gateways}
-                    onChangeGateway={this.handleGatewayChange}
-                    selectedGateway={this.state.selectedGateway}
-                    cardNumber={this.state.cardNumber}
-                    expMonth={this.state.expMonth}
-                    expYear={this.state.expYear}
-                    cvc={this.state.cvc}
-                    billingPostalZipcode={this.state.billingPostalZipcode}
+                    props={this.props}
                   />
-
-                  {/* Billing Address */}
-                  {/* {
-                    checkout.collectsBillingAddress ?
-                    <BillingDetails />
-                    : ''
-                  } */}
-                    {/* <p className="checkout-error">{ !selectedShippingOption ? 'Select a shipping option!' : '' }</p> */}
-                    {/* <button
-                      type="submit"
-                      className="bg-black font-color-white w-100 border-none h-56 font-weight-semibold d-none d-lg-block checkout-btn"
-                    //   disabled={!selectedShippingOption}
-                      onClick={this.captureOrder}
-                    >
-                      Make payment
-                    </button> */}
-                  </form>
-                )
-              }
             </div>
           </div>
         </div>
+        <Footer />
       </Root>
     );
   }
@@ -435,21 +317,17 @@ CheckoutPage.propTypes = {
   ]),
   checkout: PropTypes.object,
   cart: PropTypes.object,
-//   shippingOptions: PropTypes.array,
   dispatchGenerateCheckout: PropTypes.func,
-//   dispatchGetShippingOptions: PropTypes.func,
   dispatchSetDiscountCodeInCheckout: PropTypes.func,
 }
 
 export default withRouter(
   connect(({ checkout: { checkoutTokenObject }, cart, orderReceipt }) => ({
     checkout: checkoutTokenObject,
-    // shippingOptions,
     cart,
     orderReceipt,
   }), {
   dispatchGenerateCheckout,
-//   dispatchGetShippingOptions,
   dispatchSetShippingOptionsInCheckout,
   dispatchSetDiscountCodeInCheckout,
   dispatchCaptureOrder,

@@ -77,50 +77,6 @@ class CheckoutPage extends Component {
     // this.getRegions(this.state.deliveryCountry)
   }
 
-//   componentDidUpdate(prevProps, prevState) {
-//     // if cart items have changed then regenerate checkout token object to reflect changes.
-//     if (prevProps.cart && prevProps.cart.total_items !== this.props.cart.total_items && !this.props.orderReceipt) {
-//       // reset selected shipping option
-//     //   this.setState({
-//     //     'fulfillment[shipping_method]': '',
-//     //   })
-//       // regenerate checkout token object since cart has been updated
-//         this.generateToken();
-//     }
-
-    // const hasDeliveryCountryChanged = prevState.deliveryCountry !== this.state.deliveryCountry;
-    // const hasDeliveryRegionChanged = prevState.deliveryRegion !== this.state.deliveryRegion;
-
-    // // refresh list of regions when delivery country has changed
-    // if (hasDeliveryCountryChanged) {
-    //   this.getRegions(this.state.deliveryCountry);
-    // }
-
-    // // if delivery country or region have changed, and we still have a checkout token object, then refresh the token,
-    // // and reset the previously selected shipping method
-    // if (hasDeliveryCountryChanged || hasDeliveryRegionChanged && this.props.checkout) {
-    //   // reset selected shipping option since previous checkout token live object shipping info
-    //   // was set based off delivery country, deliveryRegion
-    //   this.setState({
-    //     'fulfillment[shipping_method]': '',
-    //   })
-    //   this.generateToken();
-    // }
-
-    // // if selected shippiing option changes, regenerate checkout token object to reflect changes
-    // if (
-    //   prevState['fulfillment[shipping_method]'] !== this.state['fulfillment[shipping_method]']
-    //   && this.state['fulfillment[shipping_method]'] && this.props.checkout
-    // ) {
-    //   // update checkout token object with shipping information
-    //   this.props.dispatchSetShippingOptionsInCheckout(
-    //     this.props.checkout.id,
-    //     this.state['fulfillment[shipping_method]'],
-    //     this.state.deliveryCountry,
-    //     this.state.deliveryRegion
-    //   );
-    // }
-
   handleGatewayChange(selectedGateway) {
     this.setState({
       selectedGateway,
@@ -208,97 +164,6 @@ class CheckoutPage extends Component {
     });
     console.log(data)
     console.log(details)
-
-    // // set up line_items object and inner variant object for order object below
-    // const line_items = this.props.checkout.live.line_items.reduce((obj, lineItem) => {
-    //   const variants = lineItem.variants.reduce((obj, variant) => {
-    //     obj[variant.variant_id] = variant.option_id;
-    //     return obj;
-    //   }, {});
-    //   obj[lineItem.id] = { ...lineItem};
-    //   return obj;
-    // }, {});
-
-    // // construct order object
-    // const newOrder = {
-    //   line_items,
-    //   customer: {
-    //     firstname: this.state.firstName,
-    //     lastname: this.state.lastName,
-    //     email: this.state['customer[email]']
-    //   },
-    //   // collected 'order notes' data for extra field configured in the Chec Dashboard
-    //   extrafields: {
-    //     extr_jaZWNoy09w80JA: this.state['customer[phone]'],
-    //   },
-    //   fulfillment: {
-    //     shipping_method: this.state['fulfillment[shipping_method]']
-    //   },
-    //   payment: {
-    //     gateway: 'paypal',
-    //     paypal: {
-    //       action: 'capture',
-    //       payment_id: 
-    //     }
-    //   },
-    // }
-
-    // // if test gateway selected add necessary card data
-    // // for the order to be completed.
-    // if (this.state.selectedGateway === 'test_gateway') {
-    //   newOrder.payment.card = {
-    //     number: this.state.cardNumber,
-    //     expiry_month: this.state.expMonth,
-    //     expiry_year: this.state.expYear,
-    //     cvc: this.state.cvc,
-    //     postal_zip_code: this.state.billingPostalZipcode,
-    //   }
-    // }
-
-    // capture order
-    // set order-receipt global state
-    // and redirect to confirmation page
-    // or handle errors
-
-    // NEXT
-
-    // this.props.dispatchCaptureOrder(this.props.checkout.id, newOrder)
-    //   .then((result) => {
-        
-    //   })
-    //   .catch(({ data: { error = {} }}) => {
-    //     this.setState({ loading: false });
-    //     let errorToAlert = '';
-    //     if (error.type === 'validation') {
-    //       console.log('error while capturing order', error.message)
-
-    //       error.message.forEach(({param, error}, i) => {
-    //         this.setState({
-    //           errors: {
-    //             ...this.state.errors,
-    //             [param]: error
-    //           }
-    //         })
-    //       })
-
-    //       errorToAlert = error.message.reduce((string, error) => {
-    //         return `${string} ${error.error}`
-    //       }, '');
-    //     }
-
-    //     if (error.type === 'gateway_error' || error.type === 'not_valid' || error.type === 'bad_request') {
-    //       this.setState({
-    //         errors: {
-    //           ...this.state.errors,
-    //           [(error.type === 'not_valid' ? 'fulfillment[shipping_method]' : error.type)]: error.message
-    //         },
-    //       })
-    //       errorToAlert = error.message
-    //     }
-    //     if (errorToAlert) {
-    //       alert(errorToAlert);
-    //     }
-    //   });
   }
 
   render() {
@@ -352,34 +217,6 @@ class CheckoutPage extends Component {
                       customerPhone={this.state['customer[phone]']}
                     />
                   </div>
-
-                  {/* Payment Methods */}
-                  {/* <PaymentDetails
-                    gateways={checkout.gateways}
-                    onChangeGateway={this.handleGatewayChange}
-                    selectedGateway={this.state.selectedGateway}
-                    cardNumber={this.state.cardNumber}
-                    expMonth={this.state.expMonth}
-                    expYear={this.state.expYear}
-                    cvc={this.state.cvc}
-                    billingPostalZipcode={this.state.billingPostalZipcode}
-                  /> */}
-
-                  {/* Billing Address */}
-                  {/* {
-                    checkout.collectsBillingAddress ?
-                    <BillingDetails />
-                    : ''
-                  } */}
-                    {/* <p className="checkout-error">{ !selectedShippingOption ? 'Select a shipping option!' : '' }</p> */}
-                    {/* <button
-                      type="submit"
-                      className="bg-black font-color-white w-100 border-none h-56 font-weight-semibold d-none d-lg-block checkout-btn"
-                    //   disabled={!selectedShippingOption}
-                      onClick={this.captureOrder}
-                    >
-                      Paypal
-                    </button> */}
                   </form>
                 )
               }

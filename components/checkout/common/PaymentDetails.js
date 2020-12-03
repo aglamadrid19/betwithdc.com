@@ -5,54 +5,14 @@ import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
 import CheckoutForm from './CheckoutForm'
 
-const stripePromise = loadStripe('pk_live_515pPezEikLqFqYPgsIUyv7IJvB9FolbpzIQgxmhPpWZr0PcFOsYMidIWRz2f7sPZZfr0MylkwyrAmHBTD4OkMisn00VB6X1vUH');
-
-// class CheckoutForm extends React.Component {
-//   handleSubmit = async (event) => {
-//     event.preventDefault();
-//     const {stripe, elements} = this.props;
-//     const {error, paymentMethod} = await stripe.createPaymentMethod({
-//       type: 'card',
-//       card: elements.getElement(CardElement),
-//     });
-//   };
-
-//   render() {
-//     const {stripe} = this.props;
-//     return (
-//       <form onSubmit={this.handleSubmit}>
-//         <CardElement />
-//         <button type="submit" disabled={!stripe}>
-//           Pay
-//         </button>
-//       </form>
-//     );
-//   }
-// }
-
-// const InjectedCheckoutForm = () => (
-//   <ElementsConsumer>
-//     {({stripe, elements}) => (
-//       <CheckoutForm stripe={stripe} elements={elements} />
-//     )}
-//   </ElementsConsumer>
-// );
+const stripePromise = loadStripe('pk_test_BSgKzgluNhwx78Yk9kva8VXz');
+const stripePromiseSecret = 'sk_test_KNNM9Y9v4sYDIN9sxR5pSzRf'
 
 export default class PaymentDetails extends Component {
   constructor(props) {
     super(props);
   }
   render() {
-    const {
-      gateways,
-      onChangeGateway,
-      selectedGateway,
-      cardNumber,
-      expMonth,
-      expYear,
-      cvc,
-      billingPostalZipcode,
-    } = this.props;
 
     return (
       <>
@@ -60,27 +20,24 @@ export default class PaymentDetails extends Component {
           Payment Detail
         </p>
 
-          {(gateways) ?
-            (<div>
-              <label
-                className={'p-3 d-flex align-items-center cursor-pointer'}
-              >
-                <Radiobox
-                  checked='true'
-                  className="mr-3"
-                />
-                <p className="font-weight-medium">Credit/debit card</p>
-              </label>
+          
+        <div>
+          <label
+            className={'p-3 d-flex align-items-center cursor-pointer'}
+          >
+            <Radiobox
+              checked='true'
+              className="mr-3"
+            />
+            <p className="font-weight-medium">Credit/debit card</p>
+          </label>
 
-              <div className="">
-                  <Elements stripe={stripePromise}>
-                    <CheckoutForm />
-                  </Elements>
-              </div>
-            </div>)
-            : ''
-          }
-        
+          <div className="">
+              <Elements stripe={stripePromise}>
+                <CheckoutForm props={this.props}/>
+              </Elements>
+          </div>
+          </div>
       </>
     );
   }

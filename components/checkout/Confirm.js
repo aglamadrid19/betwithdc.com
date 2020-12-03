@@ -41,7 +41,6 @@ class Confirm extends Component {
 
   render() {
     const { orderReceipt } = this.props;
-    console.log(orderReceipt)
     if (!orderReceipt) {
       return '';
     }
