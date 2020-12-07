@@ -150,9 +150,6 @@ class CheckoutPage extends Component {
    */
   captureOrder(details, data) {
     e.preventDefault();
-    // console.log(details)
-    // console.log(data)
-    // // reset error states
     this.setState({
       errors: {
         'fulfillment[shipping_method]': null,
@@ -162,8 +159,6 @@ class CheckoutPage extends Component {
       },
       loading: true,
     });
-    console.log(data)
-    console.log(details)
   }
 
   render() {
@@ -181,22 +176,6 @@ class CheckoutPage extends Component {
           <title>Checkout | betatdc.com</title>
         </Head>
         <div className="custom-container py-5 my-4 my-sm-5">
-
-          {/* Breadcrums Mobile */}
-          {/* <div
-            className="d-flex d-sm-none px-4 py-3 borderbottom border-color-gray400 justify-content-center"
-            style={{ margin: '0 -1.5rem' }}
-          >
-            <Link href="/collection">
-              <div className="font-size-caption text-decoration-underline cursor-pointer">
-                Cart
-              </div>
-            </Link>
-            <img src="/icon/arrow-right.svg" className="w-16 mx-1" alt="Arrow icon"/>
-            <div className="font-size-caption cursor-pointer">
-              Checkout
-            </div>
-          </div> */}
 
           {/* Row */}
           <div className="row mt-4">
@@ -259,22 +238,7 @@ class CheckoutPage extends Component {
                     )
                   })}
                 </div>
-                {/* <form className="row py-3 borderbottom border-color-gray400">
-                  <input
-                    name="discountCode"
-                    onChange={this.handleFormChanges}
-                    value={this.state.discountCode}
-                    placeholder="Gift card or discount code"
-                    className="mr-2 col"
-                  />
-                  <button
-                    className="font-color-white border-none font-weight-medium px-4 col-auto"
-                    disabled={!this.props.checkout || undefined}
-                    onClick={this.handleDiscountChange}
-                  >
-                    Apply
-                  </button>
-                </form> */}
+ 
                 <div className="py-3 borderbottom border-color-black">
                   {[
                     {
@@ -314,8 +278,6 @@ class CheckoutPage extends Component {
                   amount = {5}
                   currency = {'USD'}
                   onSuccess={ (details, data) => {
-                    console.log(details)
-                    console.log(data)
                   }}
                 >
                 </PayPalBtn>

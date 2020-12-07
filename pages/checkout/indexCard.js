@@ -79,7 +79,7 @@ class CheckoutPage extends Component {
     }
     // on initial mount generate checkout token object from the cart,
     // and then subsequently below in componentDidUpdate if the props.cart.total_items has changed
-    this.generateToken();
+    // this.generateToken();
     // this.getRegions(this.state.deliveryCountry)
   }
 
@@ -94,7 +94,6 @@ class CheckoutPage extends Component {
   generateToken() {
     const { cart, dispatchGenerateCheckout } = this.props;
     // const { deliveryCountry: country, deliveryRegion: region } = this.state;
-
     return dispatchGenerateCheckout(cart.id).then((checkout) => {
     })
   }
@@ -181,7 +180,6 @@ class CheckoutPage extends Component {
         let errorToAlert = '';
         if (error.type === 'validation') {
           console.log('error while capturing order', error.message)
-
           error.message.forEach(({param, error}, i) => {
             this.setState({
               errors: {
@@ -205,6 +203,7 @@ class CheckoutPage extends Component {
           })
           errorToAlert = error.message
         }
+
         if (errorToAlert) {
           alert(errorToAlert);
         }

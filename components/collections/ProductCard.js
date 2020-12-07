@@ -1,28 +1,116 @@
 import React, { Component } from 'react';
 import Link from 'next/link';
 import { connect } from 'react-redux';
+import { withRouter } from 'next/router';
 import {loadStripe} from '@stripe/stripe-js';
 import {Elements} from '@stripe/react-stripe-js';
 import CheckoutForm from '../checkout/CheckoutForm';
 import {commerce} from '../../lib/commerce'
 import { addToCart } from '../../store/actions/cartActions';
+import {
+  generateCheckoutTokenFromCart as dispatchGenerateCheckout,
+  setShippingOptionInCheckout as dispatchSetShippingOptionsInCheckout,
+  setDiscountCodeInCheckout as dispatchSetDiscountCodeInCheckout,
+  captureOrder as dispatchCaptureOrder,
+} from '../../store/actions/checkoutActions';
+import PropTypes from 'prop-types';
 
-const stripePromise = loadStripe('pk_live_515pPezEikLqFqYPgsIUyv7IJvB9FolbpzIQgxmhPpWZr0PcFOsYMidIWRz2f7sPZZfr0MylkwyrAmHBTD4OkMisn00VB6X1vUH');
+const stripePromise = loadStripe('pk_test_BSgKzgluNhwx78Yk9kva8VXz');
 
 class ProductCard extends Component {
   constructor(props) {
-    super(props)
+    super(props.props)
 
     this.state = {
       selectedOptions: [],
     }
-
-    this.handleAddToCart = this.handleAddToCart.bind(this);
   }
+
+  // componentDidMount() {
+  //   this.generateToken();
+  // }
 
   handleAddToCart() {
     const { product } = this.props
-    this.props.dispatch(addToCart(product.id, 1))
+    console.log(this.props)
+    this.props.props.dispatch(addToCart(product.id, 1))
+  }
+
+  generateToken() {
+    const { cart, dispatchGenerateCheckout } = this.props.props;
+    const { deliveryCountry: country, deliveryRegion: region } = this.state;
+
+    return dispatchGenerateCheckout(cart.id).then((checkout) => {
+    })
+  }
+
+  captureOrder() {
+    // set up line_items object and inner variant object for order object below
+    const line_items = this.props.checkout.live.line_items.reduce((obj, lineItem) => {
+      const variants = lineItem.variants.reduce((obj, variant) => {
+        obj[variant.variant_id] = variant.option_id;
+        return obj;
+      }, {});
+      obj[lineItem.id] = { ...lineItem};
+      return obj;
+    }, {});
+
+    // construct order object
+    const newOrder = {
+      line_items,
+      customer: {
+        firstname: this.state.firstName,
+        lastname: this.state.lastName,
+        email: this.state['customer[email]']
+      },
+      extrafields: {
+        extr_jaZWNoy09w80JA: this.state['customer[phone]'],
+      },
+      fulfillment: {
+        shipping_method: this.state['fulfillment[shipping_method]']
+      },
+      payment: {
+        gateway: 'stripe',
+      },
+    }
+
+    this.props.dispatchCaptureOrder(this.props.checkout.id, newOrder)
+      .then(() => {
+        this.props.router.push('/checkout/confirm');
+      })
+      .catch(({ data: { error = {} }}) => {
+        this.setState({ loading: false });
+        let errorToAlert = '';
+        if (error.type === 'validation') {
+          console.log('error while capturing order', error.message)
+
+          error.message.forEach(({param, error}, i) => {
+            this.setState({
+              errors: {
+                ...this.state.errors,
+                [param]: error
+              }
+            })
+          })
+
+          errorToAlert = error.message.reduce((string, error) => {
+            return `${string} ${error.error}`
+          }, '');
+        }
+
+        if (error.type === 'gateway_error' || error.type === 'not_valid' || error.type === 'bad_request') {
+          this.setState({
+            errors: {
+              ...this.state.errors,
+              [(error.type === 'not_valid' ? 'fulfillment[shipping_method]' : error.type)]: error.message
+            },
+          })
+          errorToAlert = error.message
+        }
+        if (errorToAlert) {
+          alert(errorToAlert);
+        }
+      });
   }
 
   render() {
@@ -48,7 +136,7 @@ class ProductCard extends Component {
         </p>
         <div>
           <Elements stripe={stripePromise}>
-             <CheckoutForm label={product.name.replace(reg, '')} price={product.price.raw}/>
+             <CheckoutForm props={this.props}/>
            </Elements>
         </div>
 
@@ -68,13 +156,6 @@ class ProductCard extends Component {
               </span>
             </button>
           </Link>
-          {/* <Link href="/checkout">
-            <button type="button" className="h-56 btn btn-dark font-color-white" onClick={this.handleAddToCart}>
-              <span className="">
-                <i className="fa fa-btc fa-lg fa-fw" aria-hidden="true"></i>
-              </span>
-            </button>
-          </Link> */}
         </div>
       </div>
     </div>
@@ -82,4 +163,14 @@ class ProductCard extends Component {
   }
 }
 
-export default connect(state => state)(ProductCard);
+export default withRouter(
+  connect(({ checkout: { checkoutTokenObject }, cart, orderReceipt }) => ({
+    checkout: checkoutTokenObject,
+    cart,
+    orderReceipt,
+  }), {
+  dispatchGenerateCheckout,
+  dispatchSetShippingOptionsInCheckout,
+  dispatchSetDiscountCodeInCheckout,
+  dispatchCaptureOrder,
+})(ProductCard));

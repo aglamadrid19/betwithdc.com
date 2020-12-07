@@ -3,11 +3,7 @@ import {
   CardElement,
   useStripe,
   useElements,
-  Elements
 } from "@stripe/react-stripe-js";
-import PropTypes from 'prop-types';
-import ShippingForm from '../../../components/checkout/common/ShippingForm';
-import {commerce} from '../../../lib/commerce'
 
 export default function CheckoutForm(properties) {
     const {props} = properties.props
@@ -15,7 +11,6 @@ export default function CheckoutForm(properties) {
     const [error, setError] = useState(null);
     const [processing, setProcessing] = useState('');
     const [disabled, setDisabled] = useState(true);
-    const [clientSecret, setClientSecret] = useState('');
 
     // Form state data
     const [firstName, setFirstName] = useState('')
@@ -80,7 +75,7 @@ export default function CheckoutForm(properties) {
       return;
     }
     
-    const order = await commerce.checkout.capture(props.checkout.id, {
+    const order = {
       customer: {
         email: email,
         firstname: firstName,
@@ -95,14 +90,15 @@ export default function CheckoutForm(properties) {
       extrafields: {
         extr_jaZWNoy09w80JA: phone
       }
-    })
-
-    setProcessing(false);
-    setSucceeded(true)
+    }
     
-    props.router.push('/confirm');
+      props.dispatchCaptureOrder(props.checkout.id, order)
+        .then(() => {
+          props.router.push('/checkout/confirm');
+        })
+      setProcessing(false);
+      setSucceeded(true)
 };
-
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
         <div className="mb-5">

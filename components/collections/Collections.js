@@ -11,7 +11,6 @@ import {commerce} from '../../lib/commerce'
 class Collections extends Component {
   constructor(props) {
     super(props);
-    // this.page = React.createRef();
 
     this.state = {
         categories: [],
@@ -26,7 +25,6 @@ class Collections extends Component {
 
   componentDidMount() {
     this.fetchProducts();
-    // this.fetchCart();
   }
 
   /**
@@ -65,8 +63,6 @@ class Collections extends Component {
     const catUFC = categories.filter(result => {
       return result.name === 'UFC'
     })
-    
-    console.log(catUFC)
 
     return (
       <div className="collection">  

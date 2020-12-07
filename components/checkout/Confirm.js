@@ -7,7 +7,6 @@ import { withRouter } from 'next/router';
 class Confirm extends Component {
   constructor(props) {
     super(props);
-
     this.handlePrint = this.handlePrint.bind(this);
   }
 
@@ -66,12 +65,12 @@ class Confirm extends Component {
                 </p>
                 <div className="d-flex w-100 justify-content-center flex-column flex-sm-row">
                   <Link href="/">
-                    <button className="checkout-confirm-buttons h-48 px-3 flex-grow-1 border bg-white border-color-gray500 font-color-light mb-2 mb-sm-0 mr-sm-2 no-print">
+                    <button className="checkout-confirm-buttons px-3 flex-grow-1 border bg-white border-color-gray500 font-color-light mb-2 mb-sm-0 mr-sm-2 no-print" style={{height: `3rem`}}>
                       Go back home
                     </button>
                   </Link>
                   <Link href="/">
-                    <button className="checkout-confirm-buttons h-48 px-3 flex-grow-1 bg-black font-color-white no-print">
+                    <button className="checkout-confirm-buttons px-3 flex-grow-1 bg-black font-color-white no-print" style={{height: `4rem`}}>
                       Continue shopping
                     </button>
                   </Link>

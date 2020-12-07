@@ -66,7 +66,7 @@ export const addToCartError = (error) => {
 /**
  * Async add product to cart
  */
-export const addToCart = (productId, quantity, selectedOption) => (dispatch) => commerce.cart.add(productId, quantity, selectedOption)
+export const addToCart = (productId, quantity) => (dispatch) => commerce.cart.add(productId, quantity)
   .then(product => dispatch(addToCartSuccess(product)))
   .catch(error => dispatch(addToCartError(error)));
 
