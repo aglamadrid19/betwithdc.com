@@ -11,6 +11,7 @@ import {
 import { connect } from 'react-redux';
 import { withRouter } from 'next/router';
 import PropTypes from 'prop-types';
+import { render } from 'node-sass';
 
 // const handlePaymentMethodReceived = async (event) => {
 //   // Send the payment details to our function.
@@ -54,7 +55,7 @@ import PropTypes from 'prop-types';
 // };
 
 
-function CheckoutForm(properties) {
+export default function CheckoutForm(properties) {
   const {props} = {
     ...properties
   }
@@ -62,52 +63,59 @@ function CheckoutForm(properties) {
   const [cart, setCart] = useState({})
   const [checkout, setCheckout] = useState({})
   const [paymentRequest, setPaymentRequest] = useState(null);
+  
   const stripe = useStripe();
 
-  const handleAddToCart = async () => {
-    const { product } = props
-    props.props.dispatch(addToCart(product.id, 1)).then((cartId) => {
-      generateStripePm()
-      return setCart(cartId.payload)
-    })
-  }
+  useEffect(() => {
+    if (stripe) {
+      const pr = stripe.paymentRequest({
+        country: 'US',
+        currency: 'usd',
+        total: {
+          label: 'Demo total',
+          amount: 1099,
+        },
+        requestPayerName: true,
+        requestPayerEmail: true,
+      });
+    }
+    pr.canMakePayment().then(result => {
+      if (result) {
+          pr.on('paymentmethod', handlePaymentMethodReceived);
+          setPaymentRequest(pr);
+        }
+    });
+  }, [stripe]);
+  
 
-  const generateToken = async (cartId) => {
-    const { cart, dispatchGenerateCheckout } = props.props;
-    // const { deliveryCountry: country, deliveryRegion: region } = this.state;
-    return dispatchGenerateCheckout(cartId.id).then((checkout) => {
-      console.log(checkout)
-    })
-  }
+  return(
+    <PaymentRequestButtonElement className="mr-5 ml-5 mb-3" options={{paymentRequest}} />
+  )
+}
 
-  const generateStripePm = async () => {
-      console.log(props)
-      useEffect(() => {
-        if (stripe) {
-        const pr = stripe.paymentRequest({
-            country: 'US',
-            currency: 'usd',
-            total: {
-            label: 'Shoes',
-            amount: props.cart.subtotal.raw
-            },
-            requestPayerName: true,
-            requestPayerEmail: true,
-            requestPayerPhone: true
-        });
-        pr.canMakePayment().then(result => {
-            if (result) {
-                pr.on('paymentmethod', handlePaymentMethodReceived);
-                setPaymentRequest(pr);
-            }
-        });
-      }
-    }, [stripe]);
-  }
+    
 
-  handleAddToCart().then(() => {
-    console.log(props)
-  })
+  // const handleAddToCart = async () => {
+  //   const { product } = props
+  //   props.props.dispatch(addToCart(product.id, 1)).then((cartId) => {
+  //     generateStripePm()
+  //     return setCart(cartId.payload)
+  //   })
+  // }
+
+  // const generateToken = async (cartId) => {
+  //   const { cart, dispatchGenerateCheckout } = props.props;
+  //   // const { deliveryCountry: country, deliveryRegion: region } = this.state;
+  //   return dispatchGenerateCheckout(cartId.id).then((checkout) => {
+  //     console.log(checkout)
+  //   })
+  // }
+
+  // const generateStripePm = async () => {
+  //     console.log(props)
+  // }
+
+
 
   // const {product} = properties.product
 
@@ -116,35 +124,40 @@ function CheckoutForm(properties) {
   //   props.dispatch(addToCart(product.id, 1))
   // }
   
-  const handlePaymentMethodReceived = async (event) => {
-    
-    return
-    const fullname = event.paymentMethod.billing_details.name
-    const firstname = fullname.split(" ")[0];
-    const lastname = fullname.split(" ")[1]
+  // const handlePaymentMethodReceived = async (event) => {
 
-    const order = {
-      customer: {
-        firstname: firstname,
-        lastname: lastname,
-        email: event.paymentMethod.billing_details.email
-      },
-      payment: {
-        gateway: 'stripe',
-        stripe: {
-          payment_method_id: event.paymentMethod.id
-        }
-      },
-      extrafields: {
-        extr_jaZWNoy09w80JA: event.paymentMethod.billing_details.phone
-      },
-      checkout: checkout
-    }
-    props.dispatchCaptureOrder(checkout.id, order)
-      .then(() => {
-        props.router.push('/checkout/confirm');
-      })
-    return
+  //   handleAddToCart().then(() => {
+  //     console.log(props)
+  //     console.log(cart)
+  //   })
+    
+  //   return
+  //   const fullname = event.paymentMethod.billing_details.name
+  //   const firstname = fullname.split(" ")[0];
+  //   const lastname = fullname.split(" ")[1]
+
+  //   const order = {
+  //     customer: {
+  //       firstname: firstname,
+  //       lastname: lastname,
+  //       email: event.paymentMethod.billing_details.email
+  //     },
+  //     payment: {
+  //       gateway: 'stripe',
+  //       stripe: {
+  //         payment_method_id: event.paymentMethod.id
+  //       }
+  //     },
+  //     extrafields: {
+  //       extr_jaZWNoy09w80JA: event.paymentMethod.billing_details.phone
+  //     },
+  //     checkout: checkout
+  //   }
+  //   props.dispatchCaptureOrder(checkout.id, order)
+  //     .then(() => {
+  //       props.router.push('/checkout/confirm');
+  //     })
+  //   return
 
 
 
@@ -167,7 +180,7 @@ function CheckoutForm(properties) {
       //     },
       //   },
       // };
-    }
+    // }
     // const {paymentMethod} = await stripe.createPaymentMethod({
     //   type: 'card', 
     //   card: elements.getElement(PaymentRequestButtonElement)
@@ -206,38 +219,38 @@ function CheckoutForm(properties) {
     
     
 
-    if (paymentRequest) {
-      return (
-        <PaymentRequestButtonElement className="mr-5 ml-5 mb-3" options={{paymentRequest}} />
-      )
-    }
+//     if (paymentRequest) {
+//       return (
+//         <PaymentRequestButtonElement className="mr-5 ml-5 mb-3" options={{paymentRequest}} />
+//       )
+//     }
 
-    return (
-    <div className="d-flex justify-content-around mb-3">
-      <p>Apple Pay not supported</p>
-    </div>
-    )
-}
+//     return (
+//     <div className="d-flex justify-content-around mb-3">
+//       <p>Apple Pay not supported</p>
+//     </div>
+//     )
+// }
 
-CheckoutForm.propTypes = {
-  orderReceipt: PropTypes.oneOfType([
-    PropTypes.object,
-    PropTypes.oneOf([null]),
-  ]),
-  checkout: PropTypes.object,
-  cart: PropTypes.object,
-  dispatchGenerateCheckout: PropTypes.func,
-  dispatchSetDiscountCodeInCheckout: PropTypes.func,
-}
+// CheckoutForm.propTypes = {
+//   orderReceipt: PropTypes.oneOfType([
+//     PropTypes.object,
+//     PropTypes.oneOf([null]),
+//   ]),
+//   checkout: PropTypes.object,
+//   cart: PropTypes.object,
+//   dispatchGenerateCheckout: PropTypes.func,
+//   dispatchSetDiscountCodeInCheckout: PropTypes.func,
+// }
 
-export default withRouter(
-  connect(({ checkout: { checkoutTokenObject }, cart, orderReceipt }) => ({
-    checkout: checkoutTokenObject,
-    cart,
-    orderReceipt,
-  }), {
-  dispatchGenerateCheckout,
-  dispatchSetShippingOptionsInCheckout,
-  dispatchSetDiscountCodeInCheckout,
-  dispatchCaptureOrder,
-})(CheckoutForm));
+// export default withRouter(
+//   connect(({ checkout: { checkoutTokenObject }, cart, orderReceipt }) => ({
+//     checkout: checkoutTokenObject,
+//     cart,
+//     orderReceipt,
+//   }), {
+//   dispatchGenerateCheckout,
+//   dispatchSetShippingOptionsInCheckout,
+//   dispatchSetDiscountCodeInCheckout,
+//   dispatchCaptureOrder,
+// })(CheckoutForm));
